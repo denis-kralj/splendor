@@ -2,7 +2,7 @@ namespace splendor_lib
 {
     public class Noble
     {
-        public Nobile(int prestige, int diamondDevelopmentPrice, int rubyDevelopmentPrice, int emeraldDevelopmentPrice, int onyxDevelopmentPrice, int sapphireDevelopmentPricet)
+        public Noble(int prestige, int diamondDevelopmentPrice, int rubyDevelopmentPrice, int emeraldDevelopmentPrice, int onyxDevelopmentPrice, int sapphireDevelopmentPricet)
         {
             this.OnyxDevelopmentPrice = onyxDevelopmentPrice;
             this.EmeraldDevelopmentPrice = emeraldDevelopmentPrice;

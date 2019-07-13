@@ -57,7 +57,19 @@ namespace Tests
         public void LoadsOnlyUniqueCards()
         {
             var allDevelopmentCards = _sut.LoadDevelopments();
-            Assert.True(allDevelopmentCards.Count == allDevelopmentCards.Distinct().Count());
+            Assert.AreEqual(allDevelopmentCards.Count, allDevelopmentCards.Distinct().Count());
+        }
+
+        public void LoadAllNobleCards()
+        {
+            var allNobles = _sut.LoadNobles();
+            Assert.AreEqual(10, allNobles.Count);
+        }
+
+        public void AllNobleCardsAreDistinct()
+        {
+            var allNobles = _sut.LoadNobles();
+            Assert.AreEqual(allNobles.Count, allNobles.Distinct().Count());
         }
     }
 }
