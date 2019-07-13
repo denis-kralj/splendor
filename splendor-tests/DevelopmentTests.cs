@@ -3,7 +3,7 @@ using splendor_lib;
 
 namespace Tests
 {
-    public class Tests
+    public class DevelopmentTests
     {
         [SetUp]
         public void Setup()
@@ -11,7 +11,7 @@ namespace Tests
         }
 
         [Test, TestCaseSource("ConstructorParams")]
-        public void Test1(int level, int prestige, Color discounts, int diamondPrice, int rubyPrice, int emeraldPrice, int onyxPrice, int sapphirePrice)
+        public void SameValueDevelopmentsAreEqual(int level, int prestige, Color discounts, int diamondPrice, int rubyPrice, int emeraldPrice, int onyxPrice, int sapphirePrice)
         {
             //arrange
             Development d1, d2 = null;
@@ -19,7 +19,19 @@ namespace Tests
             d1 = new Development(level, prestige, discounts,diamondPrice,rubyPrice,emeraldPrice,onyxPrice,sapphirePrice);
             d2 = new Development(level, prestige, discounts,diamondPrice,rubyPrice,emeraldPrice,onyxPrice,sapphirePrice);
             //assert
-            Assert.Assert.AreEqual(d1,d2);
+            Assert.AreEqual(d1,d2);
+        }
+
+        [Test, TestCaseSource("ConstructorParams")]
+        public void SameValueDevelopmentsAreNotEqual(int level, int prestige, Color discounts, int diamondPrice, int rubyPrice, int emeraldPrice, int onyxPrice, int sapphirePrice)
+        {
+            //arrange
+            Development d1, d2 = null;
+            //act
+            d1 = new Development(level, prestige, discounts,diamondPrice,rubyPrice,emeraldPrice,onyxPrice,sapphirePrice);
+            d2 = new Development(level-1, prestige+1, discounts,diamondPrice+1,rubyPrice-1,emeraldPrice-1,onyxPrice+1,sapphirePrice-1);
+            //assert
+            Assert.AreNotEqual(d1,d2);
         }
 
         static object[] ConstructorParams =
