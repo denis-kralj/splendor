@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>splendor_lib</RootNamespace>
   </PropertyGroup>
-<ItemGroup>
-  <None Include="$(SolutionDir)cvs-data\**" 
-        CopyToOutputDirectory="PreserveNewest"
-        LinkBase="cvs-data\" />
-</ItemGroup>
+  <ItemGroup>
+    <None Include="$(SolutionDir)csv-data\**"
+          CopyToOutputDirectory="PreserveNewest"
+          LinkBase="csv-data\" />
+  </ItemGroup>
 </Project>

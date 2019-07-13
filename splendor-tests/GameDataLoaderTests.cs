@@ -11,8 +11,8 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            var pathToDevelopments = @"..\..\..\..\cvs-data\developments-data.csv";
-            var pathToNobles = @"..\..\..\..\..\cvs-data\nobles-data.csv";
+            var pathToDevelopments = @"csv-data\developments-data.csv";
+            var pathToNobles = @"..\csv-data\nobles-data.csv";
 
             _sut = new GameDataLoader(pathToDevelopments, pathToNobles);
         }

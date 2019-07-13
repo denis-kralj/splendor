@@ -15,5 +15,9 @@
   <ItemGroup>
     <ProjectReference Include="..\splendor-lib\splendor-lib.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="$(SolutionDir)csv-data\**"
+          CopyToOutputDirectory="PreserveNewest"
+          LinkBase="csv-data\" />
+  </ItemGroup>
 </Project>
