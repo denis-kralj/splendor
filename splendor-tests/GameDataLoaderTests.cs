@@ -1,75 +1,68 @@
 using NUnit.Framework;
 using splendor_lib;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Tests
 {
     public class GameDataLoaderTests
     {
-        private GameDataLoader _sut;
+        private List<Development> _sutAllDevelopments;
+        private List<Noble> _sutAllNobiles;
 
         [SetUp]
         public void Setup()
         {
             var pathToDevelopments = @"csv-data\developments-data.csv";
-            var pathToNobles = @"..\csv-data\nobles-data.csv";
+            var pathToNobles = @"csv-data\nobles-data.csv";
 
-            _sut = new GameDataLoader(pathToDevelopments, pathToNobles);
+            var _sut = new GameDataLoader(pathToDevelopments, pathToNobles);
+
+            _sutAllDevelopments = _sut.LoadDevelopments();
+            _sutAllNobiles = _sut.LoadNobles();
         }
 
         [Test]
         public void LoadsAllDevelopmentCards()
         {
-            //act
-            var allDevelopmentCards = _sut.LoadDevelopments();
-            //assert
-            Assert.AreEqual(90, allDevelopmentCards.Count);
+            Assert.AreEqual(90, _sutAllDevelopments.Count);
         }
 
         [Test]
         public void Loads40Level1Cards()
         {
-            //act
-            var allDevelopmentCards = _sut.LoadDevelopments();
-            var allLevel1Cards = allDevelopmentCards.Where(c => c.Level == 1).ToList();
+            var allLevel1Cards = _sutAllDevelopments.Where(c => c.Level == 1).ToList();
             Assert.AreEqual(40, allLevel1Cards.Count);
         }
 
         [Test]
         public void Loads30Level2Cards()
         {
-            //act
-            var allDevelopmentCards = _sut.LoadDevelopments();
-            var allLevel2Cards = allDevelopmentCards.Where(c => c.Level == 2).ToList();
+            var allLevel2Cards = _sutAllDevelopments.Where(c => c.Level == 2).ToList();
             Assert.AreEqual(30, allLevel2Cards.Count);
         }
 
         [Test]
         public void Loads20Level3Cards()
         {
-            //act
-            var allDevelopmentCards = _sut.LoadDevelopments();
-            var allLevel3Cards = allDevelopmentCards.Where(c => c.Level == 3).ToList();
+            var allLevel3Cards = _sutAllDevelopments.Where(c => c.Level == 3).ToList();
             Assert.AreEqual(20, allLevel3Cards.Count);
         }
 
         [Test]
         public void LoadsOnlyUniqueCards()
         {
-            var allDevelopmentCards = _sut.LoadDevelopments();
-            Assert.AreEqual(allDevelopmentCards.Count, allDevelopmentCards.Distinct().Count());
+            Assert.AreEqual(_sutAllDevelopments.Count, _sutAllDevelopments.Distinct().Count());
         }
 
         public void LoadAllNobleCards()
         {
-            var allNobles = _sut.LoadNobles();
-            Assert.AreEqual(10, allNobles.Count);
+            Assert.AreEqual(10, _sutAllNobiles.Count);
         }
 
         public void AllNobleCardsAreDistinct()
         {
-            var allNobles = _sut.LoadNobles();
-            Assert.AreEqual(allNobles.Count, allNobles.Distinct().Count());
+            Assert.AreEqual(_sutAllNobiles.Count, _sutAllNobiles.Distinct().Count());
         }
     }
 }
