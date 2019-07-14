@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace splendor_lib
 {
@@ -15,13 +16,13 @@ namespace splendor_lib
                 { Token.Blue,  sPrice },
                 { Token.Green, ePrice },
                 { Token.Red,   rPrice }
-            };
+            }.AsReadOnly();
             Discounts = discounts;
         }
         public int Level { get; private set; }
         public int Prestige { get; private set; }
         public Token Discounts { get; private set; }
-        public Dictionary<Token,int> Cost {get;private set; }
+        public ReadOnlyDictionary<Token,int> Cost {get;private set; }
 
         public static bool operator ==(Development obj1, Development obj2)
         {
