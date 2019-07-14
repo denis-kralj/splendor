@@ -2,7 +2,7 @@ namespace splendor_lib
 {
     public class Development
     {
-        public Development(int level, int prestige, Color discounts, int diamondPrice, int rubyPrice, int emeraldPrice, int onyxPrice, int sapphirePrice)
+        public Development(int level, int prestige, Token discounts, int diamondPrice, int rubyPrice, int emeraldPrice, int onyxPrice, int sapphirePrice)
         {
             Level = level;
             Prestige = prestige;
@@ -15,7 +15,7 @@ namespace splendor_lib
         }
         public int Level { get; private set; }
         public int Prestige { get; private set; }
-        public Color Discounts { get; private set; }
+        public Token Discounts { get; private set; }
         public int DiamondPrice { get; private set; }
         public int RubyPrice { get; private set; }
         public int EmeraldPrice { get; private set; }

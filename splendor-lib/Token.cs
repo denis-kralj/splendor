@@ -1,7 +1,12 @@
-﻿namespace splendor_lib
+namespace splendor_lib
 {
-    public abstract class Token
+    public enum Token
     {
-        public abstract Color Color { get; }
+        Red = 0,
+        Blue = 1,
+        Green = 2,
+        White = 4,
+        Black = 8,
+        Yellow = 16
     }
 }
