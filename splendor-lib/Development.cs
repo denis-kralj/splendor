@@ -1,26 +1,27 @@
+using System.Collections.Generic;
+
 namespace splendor_lib
 {
     public class Development
     {
-        public Development(int level, int prestige, Token discounts, int diamondPrice, int rubyPrice, int emeraldPrice, int onyxPrice, int sapphirePrice)
+        public Development(int level, int prestige, Token discounts, int dPrice, int rPrice, int ePrice, int oPrice, int sPrice)
         {
             Level = level;
             Prestige = prestige;
+            Cost = new Dictionary<Token, int>
+            {
+                { Token.White, dPrice },
+                { Token.Black, oPrice },
+                { Token.Blue,  sPrice },
+                { Token.Green, ePrice },
+                { Token.Red,   rPrice }
+            };
             Discounts = discounts;
-            DiamondPrice = diamondPrice;
-            RubyPrice = rubyPrice;
-            EmeraldPrice = emeraldPrice;
-            OnyxPrice = onyxPrice;
-            SapphirePrice = sapphirePrice;
         }
         public int Level { get; private set; }
         public int Prestige { get; private set; }
         public Token Discounts { get; private set; }
-        public int DiamondPrice { get; private set; }
-        public int RubyPrice { get; private set; }
-        public int EmeraldPrice { get; private set; }
-        public int OnyxPrice { get; private set; }
-        public int SapphirePrice { get; private set; }
+        public Dictionary<Token,int> Cost {get;private set; }
 
         public static bool operator ==(Development obj1, Development obj2)
         {
@@ -41,11 +42,11 @@ namespace splendor_lib
                 castObj.Level == this.Level &&
                 castObj.Prestige == this.Prestige &&
                 castObj.Discounts == this.Discounts &&
-                castObj.DiamondPrice == this.DiamondPrice &&
-                castObj.RubyPrice == this.RubyPrice &&
-                castObj.EmeraldPrice == this.EmeraldPrice &&
-                castObj.OnyxPrice == this.OnyxPrice &&
-                castObj.SapphirePrice == this.SapphirePrice;
+                castObj.Cost[Token.White] == this.Cost[Token.White] &&
+                castObj.Cost[Token.Red] == this.Cost[Token.Red] &&
+                castObj.Cost[Token.Green] == this.Cost[Token.Green] &&
+                castObj.Cost[Token.Black] == this.Cost[Token.Black] &&
+                castObj.Cost[Token.Blue] == this.Cost[Token.Blue];
         }
 
         public override int GetHashCode()
