@@ -26,7 +26,7 @@ namespace splendor_lib
 
         public static bool operator ==(Development obj1, Development obj2)
         {
-            return obj1.Equals(obj2);
+            return obj1 as object != null && obj1.Equals(obj2);
         }
 
         public static bool operator !=(Development obj1, Development obj2)
