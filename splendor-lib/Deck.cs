@@ -41,7 +41,7 @@ namespace splendor_lib
 
 
 
-        public IEnumerable<TCard> Draw(int count = 1)
+        public List<TCard> Draw(int count = 1)
         {
             if(count < 0)
                 throw new ArgumentOutOfRangeException(

@@ -84,7 +84,7 @@ namespace splendor_tests
         }
 
         [Test]
-        public void CanGetNoble()
+        public void CalculatesPrestigeWithTakenNobles()
         {
             var noble = new Noble(2,1,1,1,1,1);
             _sut.TakeNoble(noble);
