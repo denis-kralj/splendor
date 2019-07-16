@@ -107,5 +107,10 @@ namespace splendor_lib
             }
 
         }
+
+        public void TakeNoble(Noble noble)
+        {
+            _nobles.Add(noble);
+        }
     }
 }

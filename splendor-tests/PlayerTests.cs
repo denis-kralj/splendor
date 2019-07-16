@@ -82,5 +82,14 @@ namespace splendor_tests
 
             Assert.IsTrue(_sut.CanPay(cost));
         }
+
+        [Test]
+        public void CanGetNoble()
+        {
+            var noble = new Noble(2,1,1,1,1,1);
+            _sut.TakeNoble(noble);
+
+            Assert.AreEqual(_sut.Prestige, noble.Prestige);
+        }
     }
 }
