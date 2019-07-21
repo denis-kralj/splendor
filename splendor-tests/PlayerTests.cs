@@ -40,8 +40,8 @@ namespace splendor_tests
         public void AquiredDevelopmentsGenerateDiscounts()
         {
             var numberOfBlackDiscounts = 4;
-            for (int i = 0; i < numberOfBlackDiscounts; i++)
-                _sut.GetDevelopment(new Development(i, 0, Token.Black, 0, 0, 0, 0, 0));
+            for (uint i = 0; i < numberOfBlackDiscounts; i++)
+                _sut.GetDevelopment(new Development(i, 0, Token.Black, new TokenCollection()));
 
             Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(Token.Black));
         }
@@ -49,21 +49,22 @@ namespace splendor_tests
         [Test]
         public void FailsToReserveWhenHandFull()
         {
-            Assert.IsTrue(_sut.TryReserve(new Development(1, 0, Token.Black, 0, 0, 0, 0, 0)));
-            Assert.IsTrue(_sut.TryReserve(new Development(2, 0, Token.Black, 0, 0, 0, 0, 0)));
-            Assert.IsTrue(_sut.TryReserve(new Development(3, 0, Token.Black, 0, 0, 0, 0, 0)));
-            Assert.IsFalse(_sut.TryReserve(new Development(4, 0, Token.Black, 0, 0, 0, 0, 0)));
+            var price = new TokenCollection();
+            Assert.IsTrue(_sut.TryReserve(new Development(1, 0, Token.Black, price)));
+            Assert.IsTrue(_sut.TryReserve(new Development(2, 0, Token.Black, price)));
+            Assert.IsTrue(_sut.TryReserve(new Development(3, 0, Token.Black, price)));
+            Assert.IsFalse(_sut.TryReserve(new Development(4, 0, Token.Black, price)));
         }
 
         [Test]
         public void HasCorrectPrestigeScore()
         {
-            var scored = new[] { 1, 2, 3 };
+            var scored = new uint[] { 1, 2, 3 };
 
             foreach (var score in scored)
-                _sut.GetDevelopment(new Development(1, score, Token.Black, 0, 0, 0, 0, 0));
+                _sut.GetDevelopment(new Development(1, score, Token.Black, new TokenCollection()));
 
-            Assert.AreEqual(scored.ToList().Sum(), _sut.Prestige);
+            Assert.AreEqual(scored.ToList().Sum(e => e), _sut.Prestige);
         }
 
         [Test]
@@ -101,7 +102,7 @@ namespace splendor_tests
         [Test]
         public void CalculatesPrestigeWithTakenNobles()
         {
-            var noblePrestige = 2;
+            uint noblePrestige = 2;
             var noble = new Noble(noblePrestige, 1, 1, 1, 1, 1);
             _sut.TakeNoble(noble);
 

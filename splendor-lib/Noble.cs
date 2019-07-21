@@ -4,9 +4,9 @@ namespace splendor_lib
 {
     public class Noble
     {
-        public Noble(int prestige, int dDevRequirement, int rDevRequirement, int eDevRequirement, int oDevRequirement, int sDevRequirement)
+        public Noble(uint prestige, uint dDevRequirement, uint rDevRequirement, uint eDevRequirement, uint oDevRequirement, uint sDevRequirement)
         {
-            Requirements = new Dictionary<Token, int>
+            Requirements = new Dictionary<Token, uint>
             {
                 { Token.White, dDevRequirement },
                 { Token.Black, oDevRequirement },
@@ -18,7 +18,7 @@ namespace splendor_lib
             this.Prestige = prestige;
         }
 
-        public int Prestige { get; }
-        public Dictionary<Token, int> Requirements { get; private set; }
+        public uint Prestige { get; }
+        public Dictionary<Token, uint> Requirements { get; private set; }
     }
 }

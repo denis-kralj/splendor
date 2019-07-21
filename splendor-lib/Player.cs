@@ -21,7 +21,7 @@ namespace splendor_lib
             _noblesInternal = new List<Noble>();
             _reservedDevelopmentsInternal = new List<Development>(3);
         }
-        public int Prestige => _purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige);
+        public uint Prestige => (uint)(_purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige));
         public bool HasTooManyTokens => _tokensInternal.TotalTokens > 10;
         public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
         public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
@@ -63,7 +63,6 @@ namespace splendor_lib
 
             return true;
         }
-
         public bool TryPay(TokenCollection price)
         {
             if (!CanPay(price)) return false;

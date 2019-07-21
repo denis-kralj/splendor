@@ -8,55 +8,39 @@ namespace splendor_lib
     {
         private const string _headerFirstElementDevelopment = "Level";
         private const string _headerFirstElementNoble = "Prestige";
-
         private readonly string _developmentCvsPath;
         private readonly string _noblesCvsPath;
-
         public GameDataLoader(string developmentCvsPath, string noblesCvsPath)
         {
             _developmentCvsPath = developmentCvsPath;
             _noblesCvsPath = noblesCvsPath;
         }
-
         public List<Development> LoadDevelopments()
         {
             var output = new List<Development>();
 
-            var lines = File.ReadAllLines(_developmentCvsPath);
-
-            foreach(var line in lines)
+            foreach (var line in File.ReadAllLines(_developmentCvsPath))
             {
-                var elements = line.Split(new[]{','});
-                if(IsHeader(elements[0]))
-                {
+                var elements = line.Split(new[] { ',' });
+                if (IsHeader(elements[0]))
                     continue;
-                }
 
-                var developmentCard = BuildDevelopmentCard(elements);
-
-                output.Add(developmentCard);
+                output.Add(BuildDevelopmentCard(elements));
             }
 
             return output;
         }
-
         public List<Noble> LoadNobles()
         {
             var output = new List<Noble>();
 
-            var lines = File.ReadAllLines(_noblesCvsPath);
-
-            foreach(var line in lines)
+            foreach (var line in File.ReadAllLines(_noblesCvsPath))
             {
-                var elements = line.Split(new[]{','});
-                if(IsHeader(elements[0]))
-                {
+                var elements = line.Split(new[] { ',' });
+                if (IsHeader(elements[0]))
                     continue;
-                }
 
-                var nobleCard = BuildNobleCard(elements);
-
-                output.Add(nobleCard);
+                output.Add(BuildNobleCard(elements));
             }
 
             return output;
@@ -64,30 +48,32 @@ namespace splendor_lib
 
         private Noble BuildNobleCard(string[] parameters)
         {
-            var prestige = int.Parse(parameters[0]);
-            var diamondDevelopmentPrice = int.Parse(parameters[1]);
-            var rubyDevelopmentPrice = int.Parse(parameters[2]);
-            var emeraldDevelopmentPrice = int.Parse(parameters[3]);
-            var onyxDevelopmentPrice = int.Parse(parameters[4]);
-            var sapphireDevelopmentPrice = int.Parse(parameters[5]);
+            var prestige = uint.Parse(parameters[0]);
+            var diamondDevelopmentPrice = uint.Parse(parameters[1]);
+            var rubyDevelopmentPrice = uint.Parse(parameters[2]);
+            var emeraldDevelopmentPrice = uint.Parse(parameters[3]);
+            var onyxDevelopmentPrice = uint.Parse(parameters[4]);
+            var sapphireDevelopmentPrice = uint.Parse(parameters[5]);
 
             return new Noble(prestige, diamondDevelopmentPrice, rubyDevelopmentPrice, emeraldDevelopmentPrice, onyxDevelopmentPrice, sapphireDevelopmentPrice);
         }
 
         private Development BuildDevelopmentCard(string[] parameters)
         {
-            var level = int.Parse(parameters[0]);
-            var prestige = int.Parse(parameters[1]);
+            var level = uint.Parse(parameters[0]);
+            var prestige = uint.Parse(parameters[1]);
             Token token = (Token)Enum.Parse(typeof(Token), parameters[2], true);
-            var diamondPrice = int.Parse(parameters[3]);
-            var sapphirePrice = int.Parse(parameters[4]);
-            var emeraldPrice = int.Parse(parameters[5]);
-            var rubyPrice = int.Parse(parameters[6]);
-            var onyxPrice = int.Parse(parameters[7]);
+            var diamondPrice = uint.Parse(parameters[3]);
+            var sapphirePrice = uint.Parse(parameters[4]);
+            var emeraldPrice = uint.Parse(parameters[5]);
+            var rubyPrice = uint.Parse(parameters[6]);
+            var onyxPrice = uint.Parse(parameters[7]);
 
-            return new Development(level,prestige, token,diamondPrice,sapphirePrice,emeraldPrice,rubyPrice,onyxPrice);
+            var price = new TokenCollection(diamondPrice, onyxPrice, sapphirePrice, emeraldPrice, rubyPrice, 0);
+
+            return new Development(level, prestige, token, price);
         }
-        private bool IsHeader(string element) => 
+        private bool IsHeader(string element) =>
             element == _headerFirstElementDevelopment ||
             element == _headerFirstElementNoble;
     }
