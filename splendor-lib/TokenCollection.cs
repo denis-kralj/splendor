@@ -17,10 +17,8 @@ namespace splendor_lib
             otherCollection.GetCount(Token.Yellow)
         )
         { }
-        public TokenCollection(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0)
-        {
+        public TokenCollection(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0) => 
             SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
-        }
         public uint GetCount(Token type) => _tokensInternal[type];
         public uint TotalTokens => (uint)_tokensInternal.Values.Sum(v => v);
         public static bool operator ==(TokenCollection obj1, TokenCollection obj2) => obj1 as object != null && obj1.Equals(obj2);

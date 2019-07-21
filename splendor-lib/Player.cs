@@ -10,10 +10,7 @@ namespace splendor_lib
         private List<Development> _purchasedDevelopmentsInternal;
         private List<Noble> _noblesInternal;
         private List<Development> _reservedDevelopmentsInternal;
-        public Player()
-        {
-            SetInitState();
-        }
+        public Player() => SetInitState();
         private void SetInitState()
         {
             _tokensInternal = new TokenCollection();
