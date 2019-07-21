@@ -2,17 +2,18 @@ namespace splendor_lib
 {
     public class Development
     {
+        private TokenCollection _costInternal;
         public Development(uint level, uint prestige, Token discounts, TokenCollection cost)
         {
             Level = level;
             Prestige = prestige;
-            Cost = cost;
+            _costInternal = cost;
             Discounts = discounts;
         }
         public uint Level { get; private set; }
         public uint Prestige { get; private set; }
         public Token Discounts { get; private set; }
-        public TokenCollection Cost {get;private set; }
+        public TokenCollection Cost => new TokenCollection(_costInternal);
         public static bool operator ==(Development obj1, Development obj2) => obj1 as object != null && obj1.Equals(obj2);
         public static bool operator !=(Development obj1, Development obj2) => !(obj1 == obj2);
         public override int GetHashCode() => base.GetHashCode();
@@ -21,6 +22,6 @@ namespace splendor_lib
             (obj as Development).Level == this.Level &&
             (obj as Development).Prestige == this.Prestige &&
             (obj as Development).Discounts == this.Discounts &&
-            (obj as Development).Cost == this.Cost;
+            (obj as Development).Cost == this._costInternal;
     }
 }

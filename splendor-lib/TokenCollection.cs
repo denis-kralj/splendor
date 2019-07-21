@@ -7,6 +7,16 @@ namespace splendor_lib
     public class TokenCollection
     {
         private Dictionary<Token, uint> _tokensInternal;
+        public TokenCollection(TokenCollection otherCollection)
+        : this(
+            otherCollection.GetCount(Token.White),
+            otherCollection.GetCount(Token.Black),
+            otherCollection.GetCount(Token.Blue),
+            otherCollection.GetCount(Token.Green),
+            otherCollection.GetCount(Token.Red),
+            otherCollection.GetCount(Token.Yellow)
+        )
+        { }
         public TokenCollection(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0)
         {
             SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
