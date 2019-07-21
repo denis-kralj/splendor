@@ -55,7 +55,9 @@ namespace splendor_lib
             var onyxDevelopmentPrice = uint.Parse(parameters[4]);
             var sapphireDevelopmentPrice = uint.Parse(parameters[5]);
 
-            return new Noble(prestige, diamondDevelopmentPrice, rubyDevelopmentPrice, emeraldDevelopmentPrice, onyxDevelopmentPrice, sapphireDevelopmentPrice);
+            var cost = new NobleCost(new TokenCollection(diamondDevelopmentPrice, onyxDevelopmentPrice, sapphireDevelopmentPrice, emeraldDevelopmentPrice, rubyDevelopmentPrice));
+
+            return new Noble(prestige, cost);
         }
 
         private Development BuildDevelopmentCard(string[] parameters)

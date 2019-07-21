@@ -103,7 +103,8 @@ namespace splendor_tests
         public void CalculatesPrestigeWithTakenNobles()
         {
             uint noblePrestige = 2;
-            var noble = new Noble(noblePrestige, 1, 1, 1, 1, 1);
+
+            var noble = new Noble(noblePrestige, new NobleCost());
             _sut.TakeNoble(noble);
 
             Assert.AreEqual(_sut.Prestige, noblePrestige);

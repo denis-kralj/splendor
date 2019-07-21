@@ -1,24 +1,13 @@
-using System.Collections.Generic;
-
 namespace splendor_lib
 {
     public class Noble
     {
-        public Noble(uint prestige, uint dDevRequirement, uint rDevRequirement, uint eDevRequirement, uint oDevRequirement, uint sDevRequirement)
+        public Noble(uint prestige, NobleCost cost)
         {
-            Requirements = new Dictionary<Token, uint>
-            {
-                { Token.White, dDevRequirement },
-                { Token.Black, oDevRequirement },
-                { Token.Blue,  sDevRequirement },
-                { Token.Green, eDevRequirement },
-                { Token.Red,   rDevRequirement }
-            };
-
+            Requirements = cost;
             this.Prestige = prestige;
         }
-
         public uint Prestige { get; }
-        public Dictionary<Token, uint> Requirements { get; private set; }
+        public NobleCost Requirements { get; private set; }
     }
 }
