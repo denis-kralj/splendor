@@ -6,107 +6,88 @@ namespace splendor_lib
 {
     public class Player
     {
-        private TokenCollection _tokens;
-        private List<Development> _developments;
-        private List<Noble> _nobles;
-        private List<Development> _hand;
-
+        private TokenCollection _tokensInternal;
+        private List<Development> _purchasedDevelopmentsInternal;
+        private List<Noble> _noblesInternal;
+        private List<Development> _reservedDevelopmentsInternal;
         public Player()
         {
             SetInitState();
         }
-
         private void SetInitState()
         {
-            _tokens = new TokenCollection();
-            _developments = new List<Development>();
-            _nobles = new List<Noble>();
-            _hand = new List<Development>();
+            _tokensInternal = new TokenCollection();
+            _purchasedDevelopmentsInternal = new List<Development>();
+            _noblesInternal = new List<Noble>();
+            _reservedDevelopmentsInternal = new List<Development>(3);
         }
-
-        public int Prestige => _developments.Sum(d => d.Prestige) + _nobles.Sum(n => n.Prestige);
-
-        public bool HasTooManyTokens => _tokens.TotalTokens > 10;
-
-        public bool HandFull => _hand.Count == 3;
-
-        public void Reserve(Development development)
+        public int Prestige => _purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige);
+        public bool HasTooManyTokens => _tokensInternal.TotalTokens > 10;
+        public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
+        public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
+        public void GetDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
+        public void ResetPlayer() => SetInitState();
+        public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
+        public void CollectTokens(Token tokenType, uint amountToAdd) => _tokensInternal.AddTokens(tokenType, amountToAdd);
+        public uint TokenCount(Token type) => _tokensInternal.GetCount(type);
+        public int Discount(Token type) => _purchasedDevelopmentsInternal.Count(d => d.Discounts == type);
+        public bool TryReserve(Development development)
         {
-            if(HandFull)
-                throw new PlayerHandFullException("Can't have more then 3 cards reserver");
+            if (HandFull) return false;
 
-            _hand.Add(development);
+            _reservedDevelopmentsInternal.Add(development);
+
+            return true;
         }
-
-        public void GetDevelopment(Development development)
+        public bool CanPay(TokenCollection price)
         {
-            _developments.Add(development);
-        }
+            uint usableGold = _tokensInternal.GetCount(Token.Yellow);
 
-        public void ResetPlayer()
-        {
-            SetInitState();
-        }
-
-        public  void TakeTokens(params Token[] tokens)
-        {
-            _tokens.AddTokens(tokens);
-        }
-
-        public int TokenCount(Token type)
-        {
-            return _tokens[type];
-        }
-
-        public int Discount(Token type)
-        {
-            return _developments.Count(d => d.Discounts == type);
-        }
-
-        public bool CanPay(IReadOnlyDictionary<Token,int> price)
-        {
-            var usableGold = _tokens[Token.Yellow];
-
-            foreach(Token color in Enum.GetValues(typeof(Token)))
+            foreach (Token color in Enum.GetValues(typeof(Token)))
             {
-                if(!price.Keys.Contains(color)) continue;
+                int discountedPrice = (int)price.GetCount(color) - _purchasedDevelopmentsInternal.Count(d => d.Discounts == color);
 
-                var have = _tokens[color];
-                var discountedPrice = price[color] - _developments.Count(d => d.Discounts == color);
+                if (discountedPrice < 1)
+                    continue;
 
-                if(discountedPrice > usableGold + have) return false;
+                uint have = _tokensInternal.GetCount(color);
 
-                usableGold -= discountedPrice - have < 0 ? discountedPrice - have : 0;
+                if (discountedPrice > usableGold + have)
+                    return false;
+
+                var needGold = discountedPrice - have < 0;
+
+                if (needGold)
+                    usableGold -= (uint)(discountedPrice - have);
             }
 
             return true;
         }
 
-        public void Pay(IReadOnlyDictionary<Token,int> price)
+        public bool TryPay(TokenCollection price)
         {
-            if(!CanPay(price))
-                throw new InsufficientTokensException("Unable to pay price with current tokens");
+            if (!CanPay(price)) return false;
 
-            foreach(Token key in price.Keys)
+            foreach (Token key in Enum.GetValues(typeof(Token)))
             {
-                var discountedPrice = price[key] - _developments.Count(d => d.Discounts == key);
+                var discountedPrice = price.GetCount(key) - Discount(key);
 
-                while(discountedPrice > 0)
+                if (discountedPrice < 1)
+                    continue;
+
+                uint goldDiff = (uint)(discountedPrice - TokenCount(key));
+
+                if (goldDiff > 0)
                 {
-                    if(_tokens[key] > 0)
-                        _tokens.RemoveTokens(key);
-                    else
-                        _tokens.RemoveTokens(Token.Yellow);
-
-                    discountedPrice--;
+                    _tokensInternal.TryTake(Token.Yellow, goldDiff);
+                    price.TryTake(key, goldDiff);
                 }
+                else
+                    return false;
             }
 
-        }
-
-        public void TakeNoble(Noble noble)
-        {
-            _nobles.Add(noble);
+            _tokensInternal.TryTake(price);
+            return true;
         }
     }
 }

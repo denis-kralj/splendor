@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using splendor_lib;
 
@@ -28,47 +29,56 @@ namespace splendor_tests
         [Test]
         public void CanGetMoreTokens()
         {
-            _sut.TakeTokens(Token.Yellow, Token.Yellow, Token.Black);
+            uint yellowCount = 2;
+            uint blackCount = 1;
+            _sut.CollectTokens(new TokenCollection(yellowCount: yellowCount, blackCount: blackCount));
 
-            Assert.IsTrue(_sut.TokenCount(Token.Yellow) == 2);
-            Assert.IsTrue(_sut.TokenCount(Token.Black) == 1);
+            Assert.IsTrue(_sut.TokenCount(Token.Yellow) == yellowCount);
+            Assert.IsTrue(_sut.TokenCount(Token.Black) == blackCount);
         }
 
         [Test]
-        public void ReservedDevelopmentsGenerateDiscounts()
+        public void AquiredDevelopmentsGenerateDiscounts()
         {
-            _sut.GetDevelopment(new Development(1, 0, Token.Black, 0, 0, 0, 0, 0));
-            _sut.GetDevelopment(new Development(2, 0, Token.Black, 0, 0, 0, 0, 0));
+            var numberOfBlackDiscounts = 4;
+            for (int i = 0; i < numberOfBlackDiscounts; i++)
+                _sut.GetDevelopment(new Development(i, 0, Token.Black, 0, 0, 0, 0, 0));
 
-            Assert.AreEqual(2, _sut.Discount(Token.Black));
+            Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(Token.Black));
         }
 
         [Test]
-        public void ThrowsExceptionWhenHandFull()
+        public void FailsToReserveWhenHandFull()
         {
-            _sut.Reserve(new Development(1, 0, Token.Black, 0, 0, 0, 0, 0));
-            _sut.Reserve(new Development(2, 0, Token.Black, 0, 0, 0, 0, 0));
-            _sut.Reserve(new Development(3, 0, Token.Black, 0, 0, 0, 0, 0));
-
-            Assert.Throws<PlayerHandFullException>(() => _sut.Reserve(new Development(4, 0, Token.Black, 0, 0, 0, 0, 0)));
+            Assert.IsTrue(_sut.TryReserve(new Development(1, 0, Token.Black, 0, 0, 0, 0, 0)));
+            Assert.IsTrue(_sut.TryReserve(new Development(2, 0, Token.Black, 0, 0, 0, 0, 0)));
+            Assert.IsTrue(_sut.TryReserve(new Development(3, 0, Token.Black, 0, 0, 0, 0, 0)));
+            Assert.IsFalse(_sut.TryReserve(new Development(4, 0, Token.Black, 0, 0, 0, 0, 0)));
         }
 
         [Test]
         public void HasCorrectPrestigeScore()
         {
-            _sut.GetDevelopment(new Development(1, 1, Token.Black, 0, 0, 0, 0, 0));
-            _sut.GetDevelopment(new Development(2, 2, Token.Black, 0, 0, 0, 0, 0));
-            _sut.GetDevelopment(new Development(3, 3, Token.Black, 0, 0, 0, 0, 0));
+            var scored = new[] { 1, 2, 3 };
 
-            Assert.AreEqual(6, _sut.Prestige);
+            foreach (var score in scored)
+                _sut.GetDevelopment(new Development(1, score, Token.Black, 0, 0, 0, 0, 0));
+
+            Assert.AreEqual(scored.ToList().Sum(), _sut.Prestige);
         }
 
         [Test]
         public void CanConfirmHeCanBuyIfHasFundsWithoutGold()
         {
-            _sut.TakeTokens(Token.Black, Token.Black, Token.Black, Token.Blue, Token.Blue);
+            uint blackCount = 3;
+            uint blueCount = 2;
 
-            var cost = new Dictionary<Token, int>{{Token.Black, 3}, {Token.Blue, 2}};
+            _sut.CollectTokens(new TokenCollection(blackCount: blackCount, blueCount: blueCount));
+
+            uint blackCost = 2;
+            uint blueCost = 2;
+
+            var cost = new TokenCollection(blackCount: blackCost, blueCount: blueCost);
 
             Assert.IsTrue(_sut.CanPay(cost));
         }
@@ -76,9 +86,15 @@ namespace splendor_tests
         [Test]
         public void CanConfirmHeCanBuyIfHasFundsWithGold()
         {
-            _sut.TakeTokens(Token.Black, Token.Black, Token.Yellow, Token.Blue, Token.Yellow);
+            uint blackCount = 1;
+            uint blueCount = 2;
+            uint yellowCount = 3;
 
-            var cost = new Dictionary<Token, int>{{Token.Black, 3}, {Token.Blue, 2}};
+            _sut.CollectTokens(new TokenCollection(blackCount: blackCount, blueCount: blueCount, yellowCount: yellowCount));
+
+            uint blackCost = 3;
+            uint blueCost = 3;
+            var cost = new TokenCollection(blackCount: blackCost, blueCount: blueCost);
 
             Assert.IsTrue(_sut.CanPay(cost));
         }
@@ -86,10 +102,11 @@ namespace splendor_tests
         [Test]
         public void CalculatesPrestigeWithTakenNobles()
         {
-            var noble = new Noble(2,1,1,1,1,1);
+            var noblePrestige = 2;
+            var noble = new Noble(noblePrestige, 1, 1, 1, 1, 1);
             _sut.TakeNoble(noble);
 
-            Assert.AreEqual(_sut.Prestige, noble.Prestige);
+            Assert.AreEqual(_sut.Prestige, noblePrestige);
         }
     }
 }
