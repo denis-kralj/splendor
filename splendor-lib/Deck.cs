@@ -14,7 +14,7 @@ namespace splendor_lib
             this._stackInternal = new Stack<TCard>(cards);
         }
         public Deck(TCard[] cards) : this(new List<TCard>(cards)) { }
-        public bool IsEmpty => _stackInternal.Count == 0;
+        public bool IsEmpty => Count == 0;
         public int Count => _stackInternal.Count;
         public void ShuffleAll() => _stackInternal = ShuffleDeck();
         public Stack<TCard> ShuffleDeck()
@@ -31,13 +31,13 @@ namespace splendor_lib
         {
             drawn = null;
 
-            if(_stackInternal.Count == 0 || count == 0)
+            if(IsEmpty || count == 0)
                 return false;
 
-            if(_stackInternal.Count < count && !drawTillEnd)
+            if(Count < count && !drawTillEnd)
                 return false;
 
-            if(_stackInternal.Count < count && drawTillEnd)
+            if(Count < count && drawTillEnd)
                 count = (uint)_stackInternal.Count;
 
             drawn = _stackInternal.Pop<TCard>(count);

@@ -22,6 +22,6 @@ namespace splendor_lib
             (obj as Development).Level == this.Level &&
             (obj as Development).Prestige == this.Prestige &&
             (obj as Development).Discounts == this.Discounts &&
-            (obj as Development).Cost == this._costInternal;
+            (obj as Development).Cost == this.Cost;
     }
 }

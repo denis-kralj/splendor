@@ -38,16 +38,16 @@ namespace splendor_lib
         }
         public bool CanPay(TokenCollection price)
         {
-            uint usableGold = _tokensInternal.GetCount(Token.Yellow);
+            uint usableGold = TokenCount(Token.Yellow);
 
             foreach (Token color in Enum.GetValues(typeof(Token)))
             {
-                int discountedPrice = (int)price.GetCount(color) - _purchasedDevelopmentsInternal.Count(d => d.Discounts == color);
+                int discountedPrice = (int)price.GetCount(color) - Discount(color);
 
                 if (discountedPrice < 1)
                     continue;
 
-                uint have = _tokensInternal.GetCount(color);
+                uint have = TokenCount(color);
 
                 if (discountedPrice > usableGold + have)
                     return false;

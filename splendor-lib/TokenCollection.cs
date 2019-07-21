@@ -26,7 +26,7 @@ namespace splendor_lib
         public void AddTokens(TokenCollection tokensToAdd)
         {
             foreach (Token key in Enum.GetValues(typeof(Token)))
-                _tokensInternal[key] += tokensToAdd.GetCount(key);
+                AddTokens(key, tokensToAdd.GetCount(key));
         }
         public void AddTokens(Token tokenType, uint amountToAdd) => _tokensInternal[tokenType] += amountToAdd;
         public bool TryTake(TokenCollection tokens)
