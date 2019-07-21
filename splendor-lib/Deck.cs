@@ -6,58 +6,43 @@ namespace splendor_lib
 {
     public class Deck<TCard>
     {
-        private List<TCard> _allCards;
-        private Stack<TCard> _deckStack;
-
-        public bool IsEmpty => _deckStack.Count == 0;
-
-        public int Count => _deckStack.Count;
+        private List<TCard> _allCardsInternal;
+        private Stack<TCard> _stackInternal;
         public Deck(List<TCard> cards)
         {
-            this._allCards = cards;
-            this._deckStack = new Stack<TCard>(cards);
+            this._allCardsInternal = cards;
+            this._stackInternal = new Stack<TCard>(cards);
         }
-
-        public Deck(TCard[] cards) : this(new List<TCard>(cards))
-        {
-        }
-
-        public void ShuffleAll()
-        {
-            _deckStack = new Stack<TCard>(_allCards);
-            ShuffleDeck();
-        }
-
-        public void ShuffleDeck()
+        public Deck(TCard[] cards) : this(new List<TCard>(cards)) { }
+        public bool IsEmpty => _stackInternal.Count == 0;
+        public int Count => _stackInternal.Count;
+        public void ShuffleAll() => _stackInternal = ShuffleDeck();
+        public Stack<TCard> ShuffleDeck()
         {
             var seed = new Random();
-            _deckStack =
-                _deckStack
+            return
+                _stackInternal
                 .Select(c => new { Index = seed.Next(), Card = c})
                 .OrderBy(c => c.Index)
                 .Select(c => c.Card)
                 .ToStack();
         }
-
-
-
-        public List<TCard> Draw(int count = 1)
+        public bool TryDraw(out List<TCard> drawn, bool drawTillEnd = false, uint count = 1)
         {
-            if(count < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(count), count, "count cannot be negative");
+            drawn = null;
 
-            if(_deckStack.Count == 0)
-                throw new DeckException("Can't draw from an empty deck");
+            if(_stackInternal.Count == 0 || count == 0)
+                return false;
 
-            if(_deckStack.Count < count)
-                count = _deckStack.Count;
+            if(_stackInternal.Count < count && !drawTillEnd)
+                return false;
 
-            var result = new List<TCard>(count);
+            if(_stackInternal.Count < count && drawTillEnd)
+                count = (uint)_stackInternal.Count;
 
-            while(count-- != 0) result.Add(_deckStack.Pop());
+            drawn = _stackInternal.Pop<TCard>(count);
 
-            return result;
+            return true;
         }
     }
 }

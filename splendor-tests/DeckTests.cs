@@ -25,28 +25,31 @@ namespace splendor_tests
         {
             var countBeforeDraw = _sut.Count;
 
-            _sut.Draw();
-
-            Assert.IsTrue(countBeforeDraw == _sut.Count + 1);
+            List<object> drawn = null;
+            Assert.IsTrue(_sut.TryDraw(out drawn));
         }
 
         [Test]
         public void CanDrawThree()
         {
             var countBeforeDraw = _sut.Count;
-            var drawCount = 3;
+            uint drawCount = 3;
 
-            _sut.Draw(drawCount);
+            List<object> drawn = null;
+
+            _sut.TryDraw(out drawn, false, drawCount);
 
             Assert.IsTrue(countBeforeDraw == _sut.Count + drawCount);
         }
 
         [Test]
-        public void ThrowsExceptionWhenDrawingFromEmpty()
+        public void FailsToDrawOnEmptyDeck()
         {
-            while(!_sut.IsEmpty) _sut.Draw();
+            List<object> drawn;
+            while(!_sut.IsEmpty)
+                Assert.IsTrue(_sut.TryDraw(out drawn));
 
-            Assert.Throws(typeof(DeckException), () => _sut.Draw());
+            Assert.IsFalse(_sut.TryDraw(out drawn));
         }
     }
 }
