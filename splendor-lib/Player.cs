@@ -74,13 +74,9 @@ namespace splendor_lib
                 var have = _tokens[color];
                 var discountedPrice = price[color] - _developments.Count(d => d.Discounts == color);
 
-                while(discountedPrice > have && usableGold > 0)
-                {
-                    usableGold--;
-                    have++;
-                }
+                if(discountedPrice > usableGold + have) return false;
 
-                if(discountedPrice > have) return false;
+                usableGold -= discountedPrice - have < 0 ? discountedPrice - have : 0;
             }
 
             return true;
