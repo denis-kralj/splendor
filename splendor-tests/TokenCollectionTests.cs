@@ -16,7 +16,7 @@ namespace splendor_tests
         [Test]
         public void ShouldAddTokensToCollectionByFirstOverride()
         {
-            var tokenCountToAdd = 3;
+            uint tokenCountToAdd = 3;
             var countBefore = _sut.TotalTokens;
 
             _sut.AddTokens(new TokenCollection(whiteCount: tokenCountToAdd));
@@ -27,7 +27,7 @@ namespace splendor_tests
         [Test]
         public void ShouldAddTokensToCollectionBySecondOverride()
         {
-            var tokenCountToAdd = 5;
+            uint tokenCountToAdd = 5;
             var countBefore = _sut.TotalTokens;
 
             _sut.AddTokens(Token.Green, tokenCountToAdd);
@@ -38,11 +38,11 @@ namespace splendor_tests
         [Test]
         public void ShouldRemoveTokens()
         {
-            var blackAddCount = 2;
-            var blueAddCount = 1;
-            var blackRemoveCount = 1;
-            var blueRemoveCount = 1;
-            var totalBeforeAdd = _sut.TotalTokens;
+            uint blackAddCount = 2;
+            uint blueAddCount = 1;
+            uint blackRemoveCount = 1;
+            uint blueRemoveCount = 1;
+            uint totalBeforeAdd = _sut.TotalTokens;
 
             _sut.AddTokens(new TokenCollection(blackCount: blackAddCount, blueCount: blueAddCount));
 
@@ -60,7 +60,7 @@ namespace splendor_tests
         [Test]
         public void ShouldFailTryWhenRemovingTokensItDoesNotHave()
         {
-            var redState = 0;
+            uint redState = 0;
             _sut.SetCollectionState(redCount: redState);
 
             Assert.IsFalse(_sut.TryTake(Token.Red, redState + 1));
@@ -70,12 +70,12 @@ namespace splendor_tests
         [Test]
         public void CanCountSpecificTokenTypeContained()
         {
-            var blackCount = 2;
-            var blueCount = 1;
-            var greenCount = 0;
-            var redCount = 2;
-            var whiteCount = 0;
-            var yellowCount = 1;
+            uint blackCount = 2;
+            uint blueCount = 1;
+            uint greenCount = 0;
+            uint redCount = 2;
+            uint whiteCount = 0;
+            uint yellowCount = 1;
 
             _sut.AddTokens(new TokenCollection(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount));
 
@@ -90,12 +90,12 @@ namespace splendor_tests
         [Test]
         public void ShouldSetupCollection()
         {
-            var whiteCount = 3;
-            var blackCount = 5;
-            var blueCount = 1;
-            var greenCount = 0;
-            var redCount = 11;
-            var yellowCount = 6;
+            uint whiteCount = 3;
+            uint blackCount = 5;
+            uint blueCount = 1;
+            uint greenCount = 0;
+            uint redCount = 11;
+            uint yellowCount = 6;
 
             _sut.SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
 

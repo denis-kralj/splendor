@@ -6,19 +6,16 @@ namespace splendor_lib
 {
     public class TokenCollection
     {
-        private Dictionary<Token, int> _tokensInternal;
-        public TokenCollection(int whiteCount = 0, int blackCount = 0, int blueCount = 0, int greenCount = 0, int redCount = 0, int yellowCount = 0)
+        private Dictionary<Token, uint> _tokensInternal;
+        public TokenCollection(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0)
         {
             SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
         }
-        public int GetCount(Token type) => _tokensInternal[type];
-        public int TotalTokens => _tokensInternal.Values.Sum(v => v);
-        public void SetCollectionState(int whiteCount = 0, int blackCount = 0, int blueCount = 0, int greenCount = 0, int redCount = 0, int yellowCount = 0)
+        public uint GetCount(Token type) => _tokensInternal[type];
+        public uint TotalTokens => (uint)_tokensInternal.Values.Sum(v => v);
+        public void SetCollectionState(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0)
         {
-            if(whiteCount < 0 || blackCount < 0 || blueCount < 0 || greenCount < 0 || redCount < 0 || yellowCount < 0)
-                throw new ArgumentOutOfRangeException("Token count cannot be set to a negative value");
-
-            _tokensInternal = new Dictionary<Token, int>
+            _tokensInternal = new Dictionary<Token, uint>
             {
                 { Token.White,  whiteCount  },
                 { Token.Black,  blackCount  },
@@ -33,11 +30,8 @@ namespace splendor_lib
             foreach (Token key in Enum.GetValues(typeof(Token)))
                 _tokensInternal[key] += tokensToAdd.GetCount(key);
         }
-        public void AddTokens(Token tokenType, int amountToAdd)
+        public void AddTokens(Token tokenType, uint amountToAdd)
         {
-            if(amountToAdd < 0)
-                throw new ArgumentOutOfRangeException(nameof(amountToAdd), amountToAdd, "Token count cannot be negative");
-
             _tokensInternal[tokenType] += amountToAdd;
         }
 
@@ -52,9 +46,9 @@ namespace splendor_lib
 
             return true;
         }
-        public bool TryTake(Token tokenType, int count)
+        public bool TryTake(Token tokenType, uint count)
         {
-            if (count < 0 || GetCount(tokenType) < count)
+            if (GetCount(tokenType) < count)
                 return false;
 
             _tokensInternal[tokenType] -= count;
