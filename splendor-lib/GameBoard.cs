@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,10 +12,10 @@ namespace splendor_lib
         private List<Development> _boardDevelopmentsInternal;
         private List<Noble> _publicNoblesInternal;
         private TokenCollection _boardTokensInternal;
-        public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
-        {
-            SetupBoard(playerCount, nobles, developments);
-        }
+        public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
+        public TokenCollection BoardTokens => new TokenCollection(_boardTokensInternal);
+        public void RecieveTokens(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
+        public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
         public void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
         {
             LoadDecks(nobles, developments);
@@ -25,11 +24,6 @@ namespace splendor_lib
             DrawNobles((int)playerCount);
             InitTokens(playerCount);
         }
-
-        public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
-
-        public TokenCollection BoardTokens => new TokenCollection(_boardTokensInternal);
-
         private void InitTokens(PlayerCount playerCount)
         {
             switch (playerCount)
@@ -59,16 +53,7 @@ namespace splendor_lib
             _lvl3Deck.ShuffleAll();
             _noblesDeck.ShuffleAll();
         }
-
-        public void RecieveTokens(TokenCollection tokensToReturnToBoard)
-        {
-            _boardTokensInternal.AddTokens(tokensToReturnToBoard);
-        }
-
-        private void DrawNobles(int playerCount)
-        {
-            _noblesDeck.TryDraw(out _publicNoblesInternal, false, (uint)playerCount + 1);
-        }
+        private void DrawNobles(int playerCount) => _noblesDeck.TryDraw(out _publicNoblesInternal, false, (uint)playerCount + 1);
         private void DrawInitialBoardDevelopments()
         {
             uint drawPerDeck = 4;
