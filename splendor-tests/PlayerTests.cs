@@ -11,7 +11,7 @@ namespace splendor_tests
         [SetUp]
         public void Setup()
         {
-            _sut = new Player();
+            _sut = new Player("A name");
         }
 
         [Test]

@@ -10,9 +10,13 @@ namespace splendor_lib
         private List<Development> _purchasedDevelopmentsInternal;
         private List<Noble> _noblesInternal;
         private List<Development> _reservedDevelopmentsInternal;
-        public Player() => SetInitState();
-        private void SetInitState()
+        public Player(string name) => SetInitState(name);
+        public string PlayerName { get; private set; }
+        private void SetInitState(string name)
         {
+            if(!string.IsNullOrEmpty(name))
+                PlayerName = name;
+
             _tokensInternal = new TokenCollection();
             _purchasedDevelopmentsInternal = new List<Development>();
             _noblesInternal = new List<Noble>();
@@ -23,7 +27,7 @@ namespace splendor_lib
         public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
         public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
         public void GetDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
-        public void ResetPlayer() => SetInitState();
+        public void ResetPlayer() => SetInitState(string.Empty);
         public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
         public void CollectTokens(Token tokenType, uint amountToAdd) => _tokensInternal.AddTokens(tokenType, amountToAdd);
         public uint TokenCount(Token type) => _tokensInternal.GetCount(type);

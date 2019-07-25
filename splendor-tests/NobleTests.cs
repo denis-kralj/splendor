@@ -31,7 +31,7 @@ namespace splendor_tests
         [Test]
         public void WillNotVisitPlayerThatDoesntCoverRequirements()
         {
-            var player = new Player();
+            var player = new Player("A name");
 
             Assert.IsFalse(_sut.TryVisit(player));
         }
@@ -39,7 +39,7 @@ namespace splendor_tests
         [Test]
         public void WillVisitPlayerThatDoesCoverRequirements()
         {
-            var player = new Player();
+            var player = new Player("A name");
 
             for(int i = 0; i < black; i++)
                 player.GetDevelopment(new Development(0,0,Token.Black,new TokenCollection()));
