@@ -13,7 +13,7 @@ namespace splendor_lib
         public uint Level { get; private set; }
         public uint Prestige { get; private set; }
         public Token Discounts { get; private set; }
-        public TokenCollection Cost => new TokenCollection(_costInternal);
+        public IReadOnlyTokenCollection Cost => _costInternal;
         public static bool operator ==(Development obj1, Development obj2) => obj1 as object != null && obj1.Equals(obj2);
         public static bool operator !=(Development obj1, Development obj2) => !(obj1 == obj2);
         public override int GetHashCode() => base.GetHashCode();

@@ -6,6 +6,5 @@ namespace splendor_lib
         //TODO win monitor
         //TODO turn action executor
         //TODO board state viewer
-        //TODO IReadOnlyTokenCollection
     }
 }

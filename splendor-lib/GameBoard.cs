@@ -13,7 +13,7 @@ namespace splendor_lib
         private List<Noble> _publicNoblesInternal;
         private TokenCollection _boardTokensInternal;
         public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
-        public TokenCollection BoardTokens => new TokenCollection(_boardTokensInternal);
+        public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
         public void RecieveTokens(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
         public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
         public void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
