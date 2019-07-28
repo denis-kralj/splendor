@@ -89,5 +89,7 @@ namespace splendor_lib
             _tokensInternal.TryTake(price);
             return true;
         }
+
+        public List<Development> ReservedDevelopments => _reservedDevelopmentsInternal;
     }
 }
