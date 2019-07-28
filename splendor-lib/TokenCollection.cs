@@ -19,14 +19,14 @@ namespace splendor_lib
                 AddTokens(key, tokensToAdd.GetCount(key));
         }
         public void AddTokens(Token tokenType, uint amountToAdd) => _tokensInternal[tokenType] += amountToAdd;
-        public bool TryTake(TokenCollection tokens)
+        public bool TryTake(TokenCollection tokensToTake)
         {
             foreach (Token key in Enum.GetValues(typeof(Token)))
-                if (GetCount(key) < tokens.GetCount(key))
+                if (GetCount(key) < tokensToTake.GetCount(key))
                     return false;
 
             foreach (Token key in Enum.GetValues(typeof(Token)))
-                _tokensInternal[key] -= tokens.GetCount(key);
+                _tokensInternal[key] -= tokensToTake.GetCount(key);
 
             return true;
         }
@@ -55,11 +55,7 @@ namespace splendor_lib
         public override bool Equals(object obj) =>
             (obj != null) && (obj as TokenCollection != null) &&
             (obj as TokenCollection).TotalTokens == this.TotalTokens &&
-            (obj as TokenCollection).GetCount(Token.Black) == this.GetCount(Token.Black) &&
-            (obj as TokenCollection).GetCount(Token.Blue) == this.GetCount(Token.Blue) &&
-            (obj as TokenCollection).GetCount(Token.Green) == this.GetCount(Token.Green) &&
-            (obj as TokenCollection).GetCount(Token.Red) == this.GetCount(Token.Red) &&
-            (obj as TokenCollection).GetCount(Token.White) == this.GetCount(Token.White) &&
-            (obj as TokenCollection).GetCount(Token.Yellow) == this.GetCount(Token.Yellow);
+            Enum.GetValues(typeof(Token)).Cast<Token>()
+            .All(t => (obj as TokenCollection).GetCount(t) == this.GetCount(t));
     }
 }
