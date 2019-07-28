@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,43 @@ namespace splendor_lib
         public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
         public void RecieveTokens(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
         public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
+        public bool TryTakeTokens(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
+        public bool TryTakeTokens(Token tokenType, uint count) => _boardTokensInternal.TryTake(tokenType, count);
+        public bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken)
+        {
+            switch (location)
+            {
+                case Location.Public: default: return TakeFromPublic(developmentToTake, out actuallyTaken);
+                case Location.Level1Deck: return TakeFromDeck(_lvl1Deck, out actuallyTaken);
+                case Location.Level2Deck: return TakeFromDeck(_lvl2Deck, out actuallyTaken);
+                case Location.Level3Deck: return TakeFromDeck(_lvl3Deck, out actuallyTaken);
+            }
+        }
+        private bool TakeFromDeck(Deck<Development> lvl1Deck, out Development actuallyTaken)
+        {
+            List<Development> drawn;
+
+            if(lvl1Deck.TryDraw(out drawn))
+            {
+                actuallyTaken = drawn.First();
+                return true;
+            }
+
+            actuallyTaken = null;
+            return false;
+        }
+        private bool TakeFromPublic(Development developmentToTake, out Development actuallyTaken)
+        {
+            if(PublicDevelopments.Contains(developmentToTake))
+            {
+                actuallyTaken = developmentToTake;
+                _boardDevelopmentsInternal.Remove(developmentToTake);
+                return true;
+            }
+
+            actuallyTaken = null;
+            return false;
+        }
         public void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
         {
             LoadDecks(nobles, developments);
@@ -72,5 +110,7 @@ namespace splendor_lib
             if (_lvl3Deck.TryDraw(out draw, false, drawPerDeck))
                 _boardDevelopmentsInternal.AddRange(draw);
         }
+
+        public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using splendor_lib;
 
@@ -73,6 +74,34 @@ namespace splendor_tests
             var actualTokens = _sut.BoardTokens;
 
             Assert.AreEqual(expectedTokens, actualTokens);
+        }
+
+        [Test]
+        public void CanGivePublicDevelopmentsAsList()
+        {
+            var allDevelopments = _sut.PublicDevelopments;
+
+            Assert.NotNull(allDevelopments);
+            Assert.AreEqual(12, allDevelopments.Count);
+        }
+
+        [Test]
+        public void CanTakeDevelopmentFromPublic()
+        {
+            var toReserve = _sut.PublicDevelopments.Last();
+
+            _sut.TryRemoveDevelopment(Location.Public, toReserve, out var actuallyTaken);
+
+            Assert.IsFalse(_sut.PublicDevelopments.Contains(actuallyTaken));
+        }
+
+        [Test]
+        public void CanTakeDevelopmentFromDeck()
+        {
+            _sut.TryRemoveDevelopment(Location.Level1Deck, null, out var actuallyTaken);
+
+            Assert.NotNull(actuallyTaken);
+            Assert.AreEqual(1, actuallyTaken.Level);
         }
     }
 }
