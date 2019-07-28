@@ -8,18 +8,18 @@ namespace splendor_lib
     {
         private const string _headerFirstElementDevelopment = "Level";
         private const string _headerFirstElementNoble = "Prestige";
-        private readonly string _developmentCvsPath;
-        private readonly string _noblesCvsPath;
-        public GameDataLoader(string developmentCvsPath, string noblesCvsPath)
+        private readonly string _developmentCsvPath;
+        private readonly string _noblesCsvPath;
+        public GameDataLoader(string developmentCsvPath, string noblesCsvPath)
         {
-            _developmentCvsPath = developmentCvsPath;
-            _noblesCvsPath = noblesCvsPath;
+            _developmentCsvPath = developmentCsvPath;
+            _noblesCsvPath = noblesCsvPath;
         }
         public List<Development> LoadDevelopments()
         {
             var output = new List<Development>();
 
-            foreach (var line in File.ReadAllLines(_developmentCvsPath))
+            foreach (var line in File.ReadAllLines(_developmentCsvPath))
             {
                 var elements = line.Split(new[] { ',' });
                 if (IsHeader(elements[0]))
@@ -34,7 +34,7 @@ namespace splendor_lib
         {
             var output = new List<Noble>();
 
-            foreach (var line in File.ReadAllLines(_noblesCvsPath))
+            foreach (var line in File.ReadAllLines(_noblesCsvPath))
             {
                 var elements = line.Split(new[] { ',' });
                 if (IsHeader(elements[0]))
