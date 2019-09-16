@@ -26,6 +26,7 @@ namespace splendor_lib
         public bool HasTooManyTokens => _tokensInternal.TotalTokens > 10;
         public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
         public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
+        public bool TryRemoveReserved(Development developmentToBuy) => _reservedDevelopmentsInternal.Remove(developmentToBuy);
         public void GetDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
         public void ResetPlayer() => SetInitState(string.Empty);
         public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
@@ -40,7 +41,7 @@ namespace splendor_lib
 
             return true;
         }
-        public bool CanPay(TokenCollection price)
+        public bool CanPay(IReadOnlyTokenCollection price)
         {
             uint usableGold = TokenCount(Token.Yellow);
 
@@ -64,7 +65,7 @@ namespace splendor_lib
 
             return true;
         }
-        public bool TryPay(TokenCollection price)
+        public bool TryPay(IReadOnlyTokenCollection price)
         {
             if (!CanPay(price)) return false;
 
@@ -80,7 +81,7 @@ namespace splendor_lib
                 if (goldDiff > 0)
                 {
                     _tokensInternal.TryTake(Token.Yellow, goldDiff);
-                    price.TryTake(key, goldDiff);
+                    _tokensInternal.AddTokens(key, goldDiff);
                 }
                 else
                     return false;

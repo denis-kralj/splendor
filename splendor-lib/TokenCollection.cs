@@ -19,7 +19,7 @@ namespace splendor_lib
                 AddTokens(key, tokensToAdd.GetCount(key));
         }
         public void AddTokens(Token tokenType, uint amountToAdd) => _tokensInternal[tokenType] += amountToAdd;
-        public bool TryTake(TokenCollection tokensToTake)
+        public bool TryTake(IReadOnlyTokenCollection tokensToTake)
         {
             foreach (Token key in Enum.GetValues(typeof(Token)))
                 if (GetCount(key) < tokensToTake.GetCount(key))
