@@ -42,11 +42,11 @@ namespace splendor_tests
             var player = new Player("A name");
 
             for(int i = 0; i < black; i++)
-                player.GetDevelopment(new Development(0,0,TokenColor.Black,new TokenCollection()));
+                player.BuyDevelopment(new Development(0,0,TokenColor.Black,new TokenCollection()));
             for(int i = 0; i < blue; i++)
-                player.GetDevelopment(new Development(0,0,TokenColor.Blue,new TokenCollection()));
+                player.BuyDevelopment(new Development(0,0,TokenColor.Blue,new TokenCollection()));
             for(int i = 0; i < white; i++)
-                player.GetDevelopment(new Development(0,0,TokenColor.White,new TokenCollection()));
+                player.BuyDevelopment(new Development(0,0,TokenColor.White,new TokenCollection()));
 
             Assert.IsTrue(_sut.TryVisit(player));
         }

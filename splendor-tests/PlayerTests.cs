@@ -41,7 +41,7 @@ namespace splendor_tests
         {
             var numberOfBlackDiscounts = 4;
             for (uint i = 0; i < numberOfBlackDiscounts; i++)
-                _sut.GetDevelopment(new Development(i, 0, TokenColor.Black, new TokenCollection()));
+                _sut.BuyDevelopment(new Development(i, 0, TokenColor.Black, new TokenCollection()));
 
             Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(TokenColor.Black));
         }
@@ -62,7 +62,7 @@ namespace splendor_tests
             var scored = new uint[] { 1, 2, 3 };
 
             foreach (var score in scored)
-                _sut.GetDevelopment(new Development(1, score, TokenColor.Black, new TokenCollection()));
+                _sut.BuyDevelopment(new Development(1, score, TokenColor.Black, new TokenCollection()));
 
             Assert.AreEqual(scored.ToList().Sum(e => e), _sut.Prestige);
         }

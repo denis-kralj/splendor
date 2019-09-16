@@ -26,7 +26,7 @@ namespace splendor_lib
 
             RemoveFromCurrentLocation(board, player);
 
-            player.GetDevelopment(_developmentToBuy);
+            player.BuyDevelopment(_developmentToBuy);
 
             result = ExecutionResult.Success;
             return true;
