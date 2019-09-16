@@ -62,7 +62,7 @@ namespace splendor_tests
             var player = new Player("Shaggy");
             var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
             var sut = new TakeThreeAction(tokensToTake);
-            board.TryTakeTokens(new TokenCollection(4,4,4,4,4,5));
+            board.TryTakeTokensFormBoard(new TokenCollection(4,4,4,4,4,5));
 
             Assert.IsFalse(sut.TryExecuteAction(player, board, out var result));
             Assert.AreEqual(ExecutionResult.InsufficientTokens, result);

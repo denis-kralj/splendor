@@ -28,7 +28,7 @@ namespace splendor_lib
 
             result = ExecutionResult.Success;
             player.CollectTokens(_tokensInternal);
-            return board.TryTakeTokens(_tokensInternal);
+            return board.TryTakeTokensFormBoard(_tokensInternal);
         }
 
         private bool BoardHasInsufficientTokens(GameBoard board)

@@ -20,7 +20,7 @@ namespace splendor_lib
                 return false;
             }
 
-            var success = board.TryTakeTokens(_tokensInternal);
+            var success = board.TryTakeTokensFormBoard(_tokensInternal);
             result = success ? ExecutionResult.Success : ExecutionResult.InsufficientTokens;
 
             if(success) player.CollectTokens(_tokensInternal);

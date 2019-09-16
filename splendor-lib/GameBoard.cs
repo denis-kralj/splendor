@@ -14,10 +14,19 @@ namespace splendor_lib
         private TokenCollection _boardTokensInternal;
         public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
         public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
-        public void RecieveTokens(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
+        public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
         public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
-        public bool TryTakeTokens(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
-        public bool TryTakeTokens(TokenColor tokenColor, uint count) => _boardTokensInternal.TryTake(tokenColor, count);
+        public void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
+        {
+            LoadDecks(nobles, developments);
+            ShuffleAllDecks();
+            DrawInitialBoardDevelopments();
+            DrawNobles((uint)playerCount);
+            InitTokens(playerCount);
+        }
+        public void AddTokensToBoard(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
+        public bool TryTakeTokensFormBoard(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
+        public bool TryTakeTokensFormBoard(TokenColor tokenColor, uint count) => _boardTokensInternal.TryTake(tokenColor, count);
         public bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken)
         {
             switch (location)
@@ -45,14 +54,6 @@ namespace splendor_lib
 
             actuallyTaken = null;
             return false;
-        }
-        public void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
-        {
-            LoadDecks(nobles, developments);
-            ShuffleAllDecks();
-            DrawInitialBoardDevelopments();
-            DrawNobles((int)playerCount);
-            InitTokens(playerCount);
         }
         private void InitTokens(PlayerCount playerCount)
         {
@@ -83,7 +84,6 @@ namespace splendor_lib
             _lvl3Deck.Shuffle(true);
             _noblesDeck.Shuffle(true);
         }
-        private void DrawNobles(int playerCount) => _publicNoblesInternal = _noblesDeck.Draw((uint)playerCount + 1);
         private void DrawInitialBoardDevelopments()
         {
             uint drawPerDeck = 4;
@@ -94,7 +94,6 @@ namespace splendor_lib
             _boardDevelopmentsInternal.AddRange(_lvl2Deck.Draw(drawPerDeck));
             _boardDevelopmentsInternal.AddRange(_lvl3Deck.Draw(drawPerDeck));
         }
-
-        public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
+        private void DrawNobles(uint playerCount) => _publicNoblesInternal = _noblesDeck.Draw(playerCount + 1);
     }
 }

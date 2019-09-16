@@ -69,7 +69,7 @@ namespace splendor_tests
 
             var expectedTokens = new TokenCollection(7 + whiteCount, 7 + blackCount, 7 + blueCount, 7 + greenCount, 7 + redCount, 5 + yellowCount);
 
-            _sut.RecieveTokens(tokensToReturnToBoard);
+            _sut.AddTokensToBoard(tokensToReturnToBoard);
 
             var actualTokens = _sut.BoardTokens;
 

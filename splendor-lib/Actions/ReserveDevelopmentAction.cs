@@ -18,11 +18,9 @@ namespace splendor_lib
                 return false;
             }
 
-            Development reserved;
-
-            if(board.TryRemoveDevelopment(_location, _developmentForReserving, out reserved))
+            if(board.TryRemoveDevelopment(_location, _developmentForReserving, out Development reserved))
             {
-                if(board.TryTakeTokens(goldPayDay))
+                if(board.TryTakeTokensFormBoard(goldPayDay))
                     player.CollectTokens(goldPayDay);
 
                 player.TryReserve(reserved);
