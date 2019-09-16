@@ -5,6 +5,7 @@ namespace splendor_lib
         Success,
         InvalidTokenCombination,
         InvalidDevelopmentToReserve,
+        InvalidDevelopmentToBuy,
         InsufficientTokens,
         HandFull,
         CantDraw
