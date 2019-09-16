@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 
 namespace splendor_lib
@@ -39,20 +38,8 @@ namespace splendor_lib
             return board.BoardTokens.GetCount(color) < _minBoardTokenCount;
         }
 
-        private bool InvalidTokenCombination()
-        {
-            if (_tokensInternal.TotalTokens != _tCount)
-                return true;
-
-            Func<TokenColor, bool> condition =
-                t =>
-                _tokensInternal.GetCount(t) == _tCount ||
-                _tokensInternal.GetCount(t) == 0;
-
-            if (!TokenUtils.AllTokens.All(condition))
-                return true;
-
-            return false;
-        }
+        private bool InvalidTokenCombination() =>
+            _tokensInternal.TotalTokens != _tCount ||
+            !TokenUtils.AllTokens.Any(t => _tokensInternal.GetCount(t) == _tCount);
     }
 }

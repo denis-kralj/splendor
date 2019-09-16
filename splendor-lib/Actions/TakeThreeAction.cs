@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 
 namespace splendor_lib
@@ -28,16 +27,8 @@ namespace splendor_lib
 
             return success;
         }
-
-        private bool InvalidTokenCombination()
-        {
-            if(_tokensInternal.TotalTokens > _validTotalCount)
-                return true;
-
-            if(TokenUtils.AllTokens.Any(t => _tokensInternal.GetCount(t) > _validSingleCount))
-                return true;
-
-            return false;
-        }
+        private bool InvalidTokenCombination() =>
+            _tokensInternal.TotalTokens > _validTotalCount ||
+            TokenUtils.AllTokens.Any(t => _tokensInternal.GetCount(t) > _validSingleCount);
     }
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace splendor_lib
 {
     public interface IGameAction
