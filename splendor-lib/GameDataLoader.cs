@@ -64,7 +64,7 @@ namespace splendor_lib
         {
             var level = uint.Parse(parameters[0]);
             var prestige = uint.Parse(parameters[1]);
-            Token token = (Token)Enum.Parse(typeof(Token), parameters[2], true);
+            TokenColor tokenColor = (TokenColor)Enum.Parse(typeof(TokenColor), parameters[2], true);
             var diamondPrice = uint.Parse(parameters[3]);
             var sapphirePrice = uint.Parse(parameters[4]);
             var emeraldPrice = uint.Parse(parameters[5]);
@@ -73,7 +73,7 @@ namespace splendor_lib
 
             var price = new TokenCollection(diamondPrice, onyxPrice, sapphirePrice, emeraldPrice, rubyPrice, 0);
 
-            return new Development(level, prestige, token, price);
+            return new Development(level, prestige, tokenColor, price);
         }
         private bool IsHeader(string element) =>
             element == _headerFirstElementDevelopment ||

@@ -31,12 +31,12 @@ namespace splendor_lib
 
         private bool BoardDoesntHaveAtLeastFour(GameBoard board)
         {
-            foreach(Token type in Enum.GetValues(typeof(Token)))
+            foreach(TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
             {
-                if(_tokensInternal.GetCount(type) == 0)
+                if(_tokensInternal.GetCount(tokenColor) == 0)
                     continue;
 
-                if(board.BoardTokens.GetCount(type) < 4)
+                if(board.BoardTokens.GetCount(tokenColor) < 4)
                     return true;
             }
 
@@ -48,8 +48,8 @@ namespace splendor_lib
             if (_tokensInternal.TotalTokens != 2)
                 return true;
 
-            foreach (Token key in Enum.GetValues(typeof(Token)))
-                if (_tokensInternal.GetCount(key) == 2 || _tokensInternal.GetCount(key) == 0)
+            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
+                if (_tokensInternal.GetCount(tokenColor) == 2 || _tokensInternal.GetCount(tokenColor) == 0)
                     continue;
                 else
                     return true;

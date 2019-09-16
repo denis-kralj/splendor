@@ -3,7 +3,7 @@ namespace splendor_lib
     public interface IReadOnlyTokenCollection
     {
          
-        uint GetCount(Token type);
+        uint GetCount(TokenColor tokenColor);
         uint TotalTokens { get; }
     }
 }

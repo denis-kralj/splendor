@@ -17,12 +17,12 @@ namespace splendor_tests
         [Test]
         public void PlayerIsInitializedWithoutTokens()
         {
-            Assert.IsTrue(_sut.TokenCount(Token.Black) == 0);
-            Assert.IsTrue(_sut.TokenCount(Token.Blue) == 0);
-            Assert.IsTrue(_sut.TokenCount(Token.Green) == 0);
-            Assert.IsTrue(_sut.TokenCount(Token.Red) == 0);
-            Assert.IsTrue(_sut.TokenCount(Token.White) == 0);
-            Assert.IsTrue(_sut.TokenCount(Token.Yellow) == 0);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Black) == 0);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Blue) == 0);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Green) == 0);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Red) == 0);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.White) == 0);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Yellow) == 0);
         }
 
         [Test]
@@ -32,8 +32,8 @@ namespace splendor_tests
             uint blackCount = 1;
             _sut.CollectTokens(new TokenCollection(yellowCount: yellowCount, blackCount: blackCount));
 
-            Assert.IsTrue(_sut.TokenCount(Token.Yellow) == yellowCount);
-            Assert.IsTrue(_sut.TokenCount(Token.Black) == blackCount);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Yellow) == yellowCount);
+            Assert.IsTrue(_sut.TokenCount(TokenColor.Black) == blackCount);
         }
 
         [Test]
@@ -41,19 +41,19 @@ namespace splendor_tests
         {
             var numberOfBlackDiscounts = 4;
             for (uint i = 0; i < numberOfBlackDiscounts; i++)
-                _sut.GetDevelopment(new Development(i, 0, Token.Black, new TokenCollection()));
+                _sut.GetDevelopment(new Development(i, 0, TokenColor.Black, new TokenCollection()));
 
-            Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(Token.Black));
+            Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(TokenColor.Black));
         }
 
         [Test]
         public void FailsToReserveWhenHandFull()
         {
             var price = new TokenCollection();
-            Assert.IsTrue(_sut.TryReserve(new Development(1, 0, Token.Black, price)));
-            Assert.IsTrue(_sut.TryReserve(new Development(2, 0, Token.Black, price)));
-            Assert.IsTrue(_sut.TryReserve(new Development(3, 0, Token.Black, price)));
-            Assert.IsFalse(_sut.TryReserve(new Development(4, 0, Token.Black, price)));
+            Assert.IsTrue(_sut.TryReserve(new Development(1, 0, TokenColor.Black, price)));
+            Assert.IsTrue(_sut.TryReserve(new Development(2, 0, TokenColor.Black, price)));
+            Assert.IsTrue(_sut.TryReserve(new Development(3, 0, TokenColor.Black, price)));
+            Assert.IsFalse(_sut.TryReserve(new Development(4, 0, TokenColor.Black, price)));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace splendor_tests
             var scored = new uint[] { 1, 2, 3 };
 
             foreach (var score in scored)
-                _sut.GetDevelopment(new Development(1, score, Token.Black, new TokenCollection()));
+                _sut.GetDevelopment(new Development(1, score, TokenColor.Black, new TokenCollection()));
 
             Assert.AreEqual(scored.ToList().Sum(e => e), _sut.Prestige);
         }

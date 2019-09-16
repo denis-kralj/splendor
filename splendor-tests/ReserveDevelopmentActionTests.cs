@@ -46,9 +46,9 @@ namespace splendor_tests
         {
             var reservee = new Player("Goku");
             
-            reservee.TryReserve(new Development(1,1,Token.Red, new TokenCollection()));
-            reservee.TryReserve(new Development(1,1,Token.Red, new TokenCollection()));
-            reservee.TryReserve(new Development(1,1,Token.Red, new TokenCollection()));
+            reservee.TryReserve(new Development(1,1,TokenColor.Red, new TokenCollection()));
+            reservee.TryReserve(new Development(1,1,TokenColor.Red, new TokenCollection()));
+            reservee.TryReserve(new Development(1,1,TokenColor.Red, new TokenCollection()));
             
             var players = new List<Player>()
             {
@@ -72,7 +72,7 @@ namespace splendor_tests
         public void ShouldNotReserveIfNotInPublicSpace()
         {
             var reservee = new Player("Goku");
-            var fakeDevelopment = new Development(1,1,Token.Red, new TokenCollection());
+            var fakeDevelopment = new Development(1,1,TokenColor.Red, new TokenCollection());
 
             var players = new List<Player>()
             {

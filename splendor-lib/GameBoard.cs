@@ -18,7 +18,7 @@ namespace splendor_lib
         public void RecieveTokens(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
         public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
         public bool TryTakeTokens(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
-        public bool TryTakeTokens(Token tokenType, uint count) => _boardTokensInternal.TryTake(tokenType, count);
+        public bool TryTakeTokens(TokenColor tokenColor, uint count) => _boardTokensInternal.TryTake(tokenColor, count);
         public bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken)
         {
             switch (location)

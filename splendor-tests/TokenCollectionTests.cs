@@ -30,7 +30,7 @@ namespace splendor_tests
             uint tokenCountToAdd = 5;
             var countBefore = _sut.TotalTokens;
 
-            _sut.AddTokens(Token.Green, tokenCountToAdd);
+            _sut.AddTokens(TokenColor.Green, tokenCountToAdd);
 
             Assert.AreEqual(countBefore + tokenCountToAdd, tokenCountToAdd);
         }
@@ -63,7 +63,7 @@ namespace splendor_tests
             uint redState = 0;
             _sut.SetCollectionState(redCount: redState);
 
-            Assert.IsFalse(_sut.TryTake(Token.Red, redState + 1));
+            Assert.IsFalse(_sut.TryTake(TokenColor.Red, redState + 1));
             Assert.IsFalse(_sut.TryTake(new TokenCollection(redCount: redState + 2)));
         }
 
@@ -79,12 +79,12 @@ namespace splendor_tests
 
             _sut.AddTokens(new TokenCollection(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount));
 
-            Assert.AreEqual(_sut.GetCount(Token.Black), blackCount);
-            Assert.AreEqual(_sut.GetCount(Token.Blue), blueCount);
-            Assert.AreEqual(_sut.GetCount(Token.Green), greenCount);
-            Assert.AreEqual(_sut.GetCount(Token.Red), redCount);
-            Assert.AreEqual(_sut.GetCount(Token.White), whiteCount);
-            Assert.AreEqual(_sut.GetCount(Token.Yellow), yellowCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Black), blackCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Blue), blueCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Green), greenCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Red), redCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.White), whiteCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Yellow), yellowCount);
         }
 
         [Test]
@@ -99,12 +99,12 @@ namespace splendor_tests
 
             _sut.SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
 
-            Assert.AreEqual(_sut.GetCount(Token.Black), blackCount);
-            Assert.AreEqual(_sut.GetCount(Token.Blue), blueCount);
-            Assert.AreEqual(_sut.GetCount(Token.Green), greenCount);
-            Assert.AreEqual(_sut.GetCount(Token.Red), redCount);
-            Assert.AreEqual(_sut.GetCount(Token.White), whiteCount);
-            Assert.AreEqual(_sut.GetCount(Token.Yellow), yellowCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Black), blackCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Blue), blueCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Green), greenCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Red), redCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.White), whiteCount);
+            Assert.AreEqual(_sut.GetCount(TokenColor.Yellow), yellowCount);
         }
     }
 }

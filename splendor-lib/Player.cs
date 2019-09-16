@@ -30,9 +30,9 @@ namespace splendor_lib
         public void GetDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
         public void ResetPlayer() => SetInitState(string.Empty);
         public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
-        public void CollectTokens(Token tokenType, uint amountToAdd) => _tokensInternal.AddTokens(tokenType, amountToAdd);
-        public uint TokenCount(Token type) => _tokensInternal.GetCount(type);
-        public int Discount(Token type) => _purchasedDevelopmentsInternal.Count(d => d.Discounts == type);
+        public void CollectTokens(TokenColor tokenColor, uint amountToAdd) => _tokensInternal.AddTokens(tokenColor, amountToAdd);
+        public uint TokenCount(TokenColor tokenColor) => _tokensInternal.GetCount(tokenColor);
+        public int Discount(TokenColor tokenColor) => _purchasedDevelopmentsInternal.Count(d => d.Discounts == tokenColor);
         public bool TryReserve(Development development)
         {
             if (HandFull) return false;
@@ -43,16 +43,16 @@ namespace splendor_lib
         }
         public bool CanPay(IReadOnlyTokenCollection price)
         {
-            uint usableGold = TokenCount(Token.Yellow);
+            uint usableGold = TokenCount(TokenColor.Yellow);
 
-            foreach (Token color in Enum.GetValues(typeof(Token)))
+            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
             {
-                int discountedPrice = (int)price.GetCount(color) - Discount(color);
+                int discountedPrice = (int)price.GetCount(tokenColor) - Discount(tokenColor);
 
                 if (discountedPrice < 1)
                     continue;
 
-                uint have = TokenCount(color);
+                uint have = TokenCount(tokenColor);
 
                 if (discountedPrice > usableGold + have)
                     return false;
@@ -69,7 +69,7 @@ namespace splendor_lib
         {
             if (!CanPay(price)) return false;
 
-            foreach (Token key in Enum.GetValues(typeof(Token)))
+            foreach (TokenColor key in Enum.GetValues(typeof(TokenColor)))
             {
                 var discountedPrice = price.GetCount(key) - Discount(key);
 
@@ -80,7 +80,7 @@ namespace splendor_lib
 
                 if (goldDiff > 0)
                 {
-                    _tokensInternal.TryTake(Token.Yellow, goldDiff);
+                    _tokensInternal.TryTake(TokenColor.Yellow, goldDiff);
                     _tokensInternal.AddTokens(key, goldDiff);
                 }
                 else

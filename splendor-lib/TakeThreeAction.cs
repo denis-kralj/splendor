@@ -27,8 +27,8 @@ namespace splendor_lib
             if(_tokensInternal.TotalTokens > 3)
                 return true;
 
-            foreach (Token key in Enum.GetValues(typeof(Token)))
-                if(_tokensInternal.GetCount(key) > 1)
+            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
+                if(_tokensInternal.GetCount(tokenColor) > 1)
                     return true;
 
             return false;

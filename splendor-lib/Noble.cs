@@ -14,8 +14,8 @@ namespace splendor_lib
         public NobleCost Requirements { get; private set; }
         public bool TryVisit(Player player)
         {
-            foreach(Token tokenType in Enum.GetValues(typeof(Token)))
-                if(player.Discount(tokenType) < Requirements.Cost(tokenType))
+            foreach(TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
+                if(player.Discount(tokenColor) < Requirements.Cost(tokenColor))
                     return false;
 
             player.TakeNoble(this);

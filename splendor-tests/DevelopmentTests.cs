@@ -11,7 +11,7 @@ namespace Tests
         }
 
         [Test, TestCaseSource("ConstructorParams")]
-        public void SameValueDevelopmentsAreEqual(uint level, uint prestige, Token discounts, uint diamondPrice, uint rubyPrice, uint emeraldPrice, uint onyxPrice, uint sapphirePrice)
+        public void SameValueDevelopmentsAreEqual(uint level, uint prestige, TokenColor discounts, uint diamondPrice, uint rubyPrice, uint emeraldPrice, uint onyxPrice, uint sapphirePrice)
         {
             //arrange
             Development d1, d2 = null;
@@ -24,7 +24,7 @@ namespace Tests
         }
 
         [Test, TestCaseSource("ConstructorParams")]
-        public void SameValueDevelopmentsAreNotEqual(uint level, uint prestige, Token discounts, uint diamondPrice, uint rubyPrice, uint emeraldPrice, uint onyxPrice, uint sapphirePrice)
+        public void SameValueDevelopmentsAreNotEqual(uint level, uint prestige, TokenColor discounts, uint diamondPrice, uint rubyPrice, uint emeraldPrice, uint onyxPrice, uint sapphirePrice)
         {
             //arrange
             Development d1, d2 = null;
@@ -40,16 +40,16 @@ namespace Tests
 
         static object[] ConstructorParams =
         {
-            new object[] { (uint)12, (uint)3, Token.White, (uint)1,(uint)2,(uint)1,(uint)3,(uint)4 },
-            new object[] { (uint)7, (uint)4, Token.Red, (uint)1,(uint)2,(uint)6,(uint)7,(uint)4 },
-            new object[] { (uint)2, (uint)6, Token.Blue, (uint)1,(uint)2,(uint)6,(uint)3,(uint)4 },
-            new object[] { (uint)1, (uint)0, Token.Black, (uint)1,(uint)2,(uint)2,(uint)3,(uint)4 },
-            new object[] { (uint)7, (uint)1, Token.Black, (uint)1,(uint)2,(uint)6,(uint)2,(uint)4 },
-            new object[] { (uint)8, (uint)2, Token.Red, (uint)1,(uint)2,(uint)6,(uint)3,(uint)2 },
-            new object[] { (uint)3, (uint)2, Token.White, (uint)1,(uint)2,(uint)6,(uint)3,(uint)4 },
-            new object[] { (uint)4, (uint)3, Token.White, (uint)1,(uint)2,(uint)6,(uint)4,(uint)4 },
-            new object[] { (uint)7, (uint)2, Token.Green, (uint)2,(uint)2,(uint)7,(uint)3,(uint)4 },
-            new object[] { (uint)1, (uint)1, Token.Red, (uint)1,(uint)2,(uint)6,(uint)3,(uint)4 }
+            new object[] { (uint)12, (uint)3, TokenColor.White, (uint)1,(uint)2,(uint)1,(uint)3,(uint)4 },
+            new object[] { (uint)7, (uint)4, TokenColor.Red, (uint)1,(uint)2,(uint)6,(uint)7,(uint)4 },
+            new object[] { (uint)2, (uint)6, TokenColor.Blue, (uint)1,(uint)2,(uint)6,(uint)3,(uint)4 },
+            new object[] { (uint)1, (uint)0, TokenColor.Black, (uint)1,(uint)2,(uint)2,(uint)3,(uint)4 },
+            new object[] { (uint)7, (uint)1, TokenColor.Black, (uint)1,(uint)2,(uint)6,(uint)2,(uint)4 },
+            new object[] { (uint)8, (uint)2, TokenColor.Red, (uint)1,(uint)2,(uint)6,(uint)3,(uint)2 },
+            new object[] { (uint)3, (uint)2, TokenColor.White, (uint)1,(uint)2,(uint)6,(uint)3,(uint)4 },
+            new object[] { (uint)4, (uint)3, TokenColor.White, (uint)1,(uint)2,(uint)6,(uint)4,(uint)4 },
+            new object[] { (uint)7, (uint)2, TokenColor.Green, (uint)2,(uint)2,(uint)7,(uint)3,(uint)4 },
+            new object[] { (uint)1, (uint)1, TokenColor.Red, (uint)1,(uint)2,(uint)6,(uint)3,(uint)4 }
         };
     }
 }

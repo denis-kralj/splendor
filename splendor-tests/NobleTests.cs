@@ -21,11 +21,11 @@ namespace splendor_tests
         {
             uint expectedRedReqirement = 0, expectedGreenReqirement = 0;
 
-            Assert.AreEqual(blue, _sut.Requirements.Cost(Token.Blue));
-            Assert.AreEqual(white, _sut.Requirements.Cost(Token.White));
-            Assert.AreEqual(black, _sut.Requirements.Cost(Token.Black));
-            Assert.AreEqual(expectedGreenReqirement, _sut.Requirements.Cost(Token.Green));
-            Assert.AreEqual(expectedRedReqirement, _sut.Requirements.Cost(Token.Red));
+            Assert.AreEqual(blue, _sut.Requirements.Cost(TokenColor.Blue));
+            Assert.AreEqual(white, _sut.Requirements.Cost(TokenColor.White));
+            Assert.AreEqual(black, _sut.Requirements.Cost(TokenColor.Black));
+            Assert.AreEqual(expectedGreenReqirement, _sut.Requirements.Cost(TokenColor.Green));
+            Assert.AreEqual(expectedRedReqirement, _sut.Requirements.Cost(TokenColor.Red));
         }
 
         [Test]
@@ -42,11 +42,11 @@ namespace splendor_tests
             var player = new Player("A name");
 
             for(int i = 0; i < black; i++)
-                player.GetDevelopment(new Development(0,0,Token.Black,new TokenCollection()));
+                player.GetDevelopment(new Development(0,0,TokenColor.Black,new TokenCollection()));
             for(int i = 0; i < blue; i++)
-                player.GetDevelopment(new Development(0,0,Token.Blue,new TokenCollection()));
+                player.GetDevelopment(new Development(0,0,TokenColor.Blue,new TokenCollection()));
             for(int i = 0; i < white; i++)
-                player.GetDevelopment(new Development(0,0,Token.White,new TokenCollection()));
+                player.GetDevelopment(new Development(0,0,TokenColor.White,new TokenCollection()));
 
             Assert.IsTrue(_sut.TryVisit(player));
         }

@@ -6,31 +6,31 @@ namespace splendor_lib
 {
     public class TokenCollection : IReadOnlyTokenCollection
     {
-        private Dictionary<Token, uint> _tokensInternal;
+        private Dictionary<TokenColor, uint> _tokensInternal;
         public TokenCollection(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0) => 
             SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
-        public uint GetCount(Token type) => _tokensInternal[type];
+        public uint GetCount(TokenColor tokenColor) => _tokensInternal[tokenColor];
         public uint TotalTokens => (uint)_tokensInternal.Values.Sum(v => v);
         public static bool operator ==(TokenCollection obj1, TokenCollection obj2) => obj1 as object != null && obj1.Equals(obj2);
         public static bool operator !=(TokenCollection obj1, TokenCollection obj2) => !(obj1 == obj2);
         public void AddTokens(TokenCollection tokensToAdd)
         {
-            foreach (Token key in Enum.GetValues(typeof(Token)))
-                AddTokens(key, tokensToAdd.GetCount(key));
+            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
+                AddTokens(tokenColor, tokensToAdd.GetCount(tokenColor));
         }
-        public void AddTokens(Token tokenType, uint amountToAdd) => _tokensInternal[tokenType] += amountToAdd;
+        public void AddTokens(TokenColor tokenColor, uint amountToAdd) => _tokensInternal[tokenColor] += amountToAdd;
         public bool TryTake(IReadOnlyTokenCollection tokensToTake)
         {
-            foreach (Token key in Enum.GetValues(typeof(Token)))
+            foreach (TokenColor key in Enum.GetValues(typeof(TokenColor)))
                 if (GetCount(key) < tokensToTake.GetCount(key))
                     return false;
 
-            foreach (Token key in Enum.GetValues(typeof(Token)))
+            foreach (TokenColor key in Enum.GetValues(typeof(TokenColor)))
                 _tokensInternal[key] -= tokensToTake.GetCount(key);
 
             return true;
         }
-        public bool TryTake(Token tokenType, uint count)
+        public bool TryTake(TokenColor tokenType, uint count)
         {
             if (GetCount(tokenType) < count)
                 return false;
@@ -41,21 +41,21 @@ namespace splendor_lib
         }
         public void SetCollectionState(uint whiteCount = 0, uint blackCount = 0, uint blueCount = 0, uint greenCount = 0, uint redCount = 0, uint yellowCount = 0)
         {
-            _tokensInternal = new Dictionary<Token, uint>
+            _tokensInternal = new Dictionary<TokenColor, uint>
             {
-                { Token.White,  whiteCount  },
-                { Token.Black,  blackCount  },
-                { Token.Blue,   blueCount   },
-                { Token.Green,  greenCount  },
-                { Token.Red,    redCount    },
-                { Token.Yellow, yellowCount }
+                { TokenColor.White,  whiteCount  },
+                { TokenColor.Black,  blackCount  },
+                { TokenColor.Blue,   blueCount   },
+                { TokenColor.Green,  greenCount  },
+                { TokenColor.Red,    redCount    },
+                { TokenColor.Yellow, yellowCount }
             };
         }
         public override int GetHashCode() => base.GetHashCode();
         public override bool Equals(object obj) =>
             (obj != null) && (obj as TokenCollection != null) &&
             (obj as TokenCollection).TotalTokens == this.TotalTokens &&
-            Enum.GetValues(typeof(Token)).Cast<Token>()
+            Enum.GetValues(typeof(TokenColor)).Cast<TokenColor>()
             .All(t => (obj as TokenCollection).GetCount(t) == this.GetCount(t));
     }
 }

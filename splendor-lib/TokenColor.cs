@@ -1,6 +1,6 @@
 namespace splendor_lib
 {
-    public enum Token
+    public enum TokenColor
     {
         Red,
         Blue,
