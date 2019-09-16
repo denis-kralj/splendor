@@ -36,7 +36,7 @@ namespace splendor_lib
         {
             uint usableGold = TokenCount(TokenColor.Yellow);
 
-            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
+            foreach (TokenColor tokenColor in TokenUtils.AllTokens)
             {
                 int discountedPrice = (int)price.GetCount(tokenColor) - Discount(tokenColor);
 
@@ -60,7 +60,7 @@ namespace splendor_lib
         {
             if (!CanPay(price)) return false;
 
-            foreach (TokenColor key in Enum.GetValues(typeof(TokenColor)))
+            foreach (TokenColor key in TokenUtils.AllTokens)
             {
                 var discountedPrice = price.GetCount(key) - Discount(key);
 

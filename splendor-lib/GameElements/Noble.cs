@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace splendor_lib
 {
@@ -14,9 +15,8 @@ namespace splendor_lib
         public NobleCost Requirements { get; private set; }
         public bool CanVisit(Player player)
         {
-            foreach(TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
-                if(player.Discount(tokenColor) < Requirements.Cost(tokenColor))
-                    return false;
+            if(TokenUtils.AllTokens.Any(t => player.Discount(t) < Requirements.Cost(t)))
+                return false;
 
             return true;
         }
