@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 
 namespace splendor_lib
 {
     public class TakeTwoSameAction : IGameAction
     {
+        private const uint _tCount = 2;
+        private const uint _minBoardTokenCount = 4;
         private TokenCollection _tokensInternal;
 
         public TakeTwoSameAction(TokenCollection tokensToTake)
@@ -18,41 +21,36 @@ namespace splendor_lib
                 return false;
             }
 
-            if(BoardDoesntHaveAtLeastFour(board))
+            if (BoardHasInsufficientTokens(board))
             {
                 result = ExecutionResult.InsufficientTokens;
                 return false;
             }
-            
-            var success = board.TryTakeTokens(_tokensInternal);
-            result = success ? ExecutionResult.Success : ExecutionResult.InsufficientTokens;
-            return success;
+
+            result = ExecutionResult.Success;
+            player.CollectTokens(_tokensInternal);
+            return board.TryTakeTokens(_tokensInternal);
         }
 
-        private bool BoardDoesntHaveAtLeastFour(GameBoard board)
+        private bool BoardHasInsufficientTokens(GameBoard board)
         {
-            foreach(TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
-            {
-                if(_tokensInternal.GetCount(tokenColor) == 0)
-                    continue;
+            var color = TokenUtils.AllTokens.First(t => _tokensInternal.GetCount(t) == _tCount);
 
-                if(board.BoardTokens.GetCount(tokenColor) < 4)
-                    return true;
-            }
-
-            return false;
+            return board.BoardTokens.GetCount(color) < _minBoardTokenCount;
         }
 
         private bool InvalidTokenCombination()
         {
-            if (_tokensInternal.TotalTokens != 2)
+            if (_tokensInternal.TotalTokens != _tCount)
                 return true;
 
-            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
-                if (_tokensInternal.GetCount(tokenColor) == 2 || _tokensInternal.GetCount(tokenColor) == 0)
-                    continue;
-                else
-                    return true;
+            Func<TokenColor, bool> condition =
+                t =>
+                _tokensInternal.GetCount(t) == _tCount ||
+                _tokensInternal.GetCount(t) == 0;
+
+            if (!TokenUtils.AllTokens.All(condition))
+                return true;
 
             return false;
         }

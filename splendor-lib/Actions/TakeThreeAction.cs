@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 
 namespace splendor_lib
 {
     public class TakeThreeAction : IGameAction
     {
+        private const uint _validTotalCount = 3;
+        private const uint _validSingleCount = 1;
         private TokenCollection _tokensInternal;
 
         public TakeThreeAction(TokenCollection tokensToTake)
@@ -17,19 +20,22 @@ namespace splendor_lib
                 result = ExecutionResult.InvalidTokenCombination;
                 return false;
             }
+
             var success = board.TryTakeTokens(_tokensInternal);
             result = success ? ExecutionResult.Success : ExecutionResult.InsufficientTokens;
+
+            if(success) player.CollectTokens(_tokensInternal);
+
             return success;
         }
 
         private bool InvalidTokenCombination()
         {
-            if(_tokensInternal.TotalTokens > 3)
+            if(_tokensInternal.TotalTokens > _validTotalCount)
                 return true;
 
-            foreach (TokenColor tokenColor in Enum.GetValues(typeof(TokenColor)))
-                if(_tokensInternal.GetCount(tokenColor) > 1)
-                    return true;
+            if(TokenUtils.AllTokens.Any(t => _tokensInternal.GetCount(t) > _validSingleCount))
+                return true;
 
             return false;
         }
