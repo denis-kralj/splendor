@@ -12,19 +12,10 @@ namespace splendor_lib
         private List<Development> _reservedDevelopmentsInternal;
         public Player(string name) => SetInitState(name);
         public string PlayerName { get; private set; }
-        private void SetInitState(string name)
-        {
-            if(!string.IsNullOrEmpty(name))
-                PlayerName = name;
-
-            _tokensInternal = new TokenCollection();
-            _purchasedDevelopmentsInternal = new List<Development>();
-            _noblesInternal = new List<Noble>();
-            _reservedDevelopmentsInternal = new List<Development>(3);
-        }
         public uint Prestige => (uint)(_purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige));
         public bool HasTooManyTokens => _tokensInternal.TotalTokens > 10;
         public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
+        public List<Development> ReservedDevelopments => _reservedDevelopmentsInternal;
         public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
         public bool TryRemoveReserved(Development developmentToBuy) => _reservedDevelopmentsInternal.Remove(developmentToBuy);
         public void GetDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
@@ -90,7 +81,15 @@ namespace splendor_lib
             _tokensInternal.TryTake(price);
             return true;
         }
+        private void SetInitState(string name)
+        {
+            if(!string.IsNullOrEmpty(name))
+                PlayerName = name;
 
-        public List<Development> ReservedDevelopments => _reservedDevelopmentsInternal;
+            _tokensInternal = new TokenCollection();
+            _purchasedDevelopmentsInternal = new List<Development>();
+            _noblesInternal = new List<Noble>();
+            _reservedDevelopmentsInternal = new List<Development>(3);
+        }
     }
 }
