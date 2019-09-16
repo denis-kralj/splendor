@@ -8,41 +8,32 @@ namespace splendor_lib
     {
         private List<TCard> _allCardsInternal;
         private Stack<TCard> _stackInternal;
+        public bool IsEmpty => Count == 0;
+        public int Count => _stackInternal.Count;
         public Deck(List<TCard> cards)
         {
             this._allCardsInternal = cards;
-            this._stackInternal = new Stack<TCard>(cards);
+            this._stackInternal = new Stack<TCard>(_allCardsInternal);
+            Shuffle();
         }
-        public Deck(TCard[] cards) : this(new List<TCard>(cards)) { }
-        public bool IsEmpty => Count == 0;
-        public int Count => _stackInternal.Count;
-        public void ShuffleAll() => _stackInternal = ShuffleDeck();
-        public Stack<TCard> ShuffleDeck()
+        public void Shuffle(bool isReshuffle = false)
         {
+            if(isReshuffle)
+                this._stackInternal = new Stack<TCard>(_allCardsInternal);
+
             var seed = new Random();
-            return
-                _stackInternal
-                .Select(c => new { Index = seed.Next(), Card = c})
-                .OrderBy(c => c.Index)
-                .Select(c => c.Card)
-                .ToStack();
+            _stackInternal = _stackInternal
+              .Select(c => new { Index = seed.Next(), Card = c })
+              .OrderBy(c => c.Index)
+              .Select(c => c.Card)
+              .ToStack();
         }
-        public bool TryDraw(out List<TCard> drawn, bool drawTillEnd = false, uint count = 1)
+        public List<TCard> Draw(uint count = 1)
         {
-            drawn = null;
-
-            if(IsEmpty || count == 0)
-                return false;
-
-            if(Count < count && !drawTillEnd)
-                return false;
-
-            if(Count < count && drawTillEnd)
+            if (Count < count)
                 count = (uint)_stackInternal.Count;
 
-            drawn = _stackInternal.Pop<TCard>(count);
-
-            return true;
+            return _stackInternal.Pop<TCard>(count);
         }
     }
 }

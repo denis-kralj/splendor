@@ -29,18 +29,11 @@ namespace splendor_lib
                 case Location.Level3Deck: return TakeFromDeck(_lvl3Deck, out actuallyTaken);
             }
         }
-        private bool TakeFromDeck(Deck<Development> lvl1Deck, out Development actuallyTaken)
+        private bool TakeFromDeck(Deck<Development> deck, out Development actuallyTaken)
         {
-            List<Development> drawn;
+            actuallyTaken = deck.IsEmpty ? null : deck.Draw().First();
 
-            if(lvl1Deck.TryDraw(out drawn))
-            {
-                actuallyTaken = drawn.First();
-                return true;
-            }
-
-            actuallyTaken = null;
-            return false;
+            return actuallyTaken != null;
         }
         private bool TakeFromPublic(Development developmentToTake, out Development actuallyTaken)
         {
@@ -86,29 +79,21 @@ namespace splendor_lib
         }
         private void ShuffleAllDecks()
         {
-            _lvl1Deck.ShuffleAll();
-            _lvl2Deck.ShuffleAll();
-            _lvl3Deck.ShuffleAll();
-            _noblesDeck.ShuffleAll();
+            _lvl1Deck.Shuffle(true);
+            _lvl2Deck.Shuffle(true);
+            _lvl3Deck.Shuffle(true);
+            _noblesDeck.Shuffle(true);
         }
-        private void DrawNobles(int playerCount) => _noblesDeck.TryDraw(out _publicNoblesInternal, false, (uint)playerCount + 1);
+        private void DrawNobles(int playerCount) => _publicNoblesInternal = _noblesDeck.Draw((uint)playerCount + 1);
         private void DrawInitialBoardDevelopments()
         {
             uint drawPerDeck = 4;
-            int boardCap = (int)drawPerDeck * 3;
 
-            _boardDevelopmentsInternal = new List<Development>(boardCap);
+            _boardDevelopmentsInternal = new List<Development>((int)drawPerDeck * 3);
 
-            List<Development> draw;
-
-            if (_lvl1Deck.TryDraw(out draw, false, drawPerDeck))
-                _boardDevelopmentsInternal.AddRange(draw);
-
-            if (_lvl2Deck.TryDraw(out draw, false, drawPerDeck))
-                _boardDevelopmentsInternal.AddRange(draw);
-
-            if (_lvl3Deck.TryDraw(out draw, false, drawPerDeck))
-                _boardDevelopmentsInternal.AddRange(draw);
+            _boardDevelopmentsInternal.AddRange(_lvl1Deck.Draw(drawPerDeck));
+            _boardDevelopmentsInternal.AddRange(_lvl2Deck.Draw(drawPerDeck));
+            _boardDevelopmentsInternal.AddRange(_lvl3Deck.Draw(drawPerDeck));
         }
 
         public List<Development> PublicDevelopments => _boardDevelopmentsInternal;

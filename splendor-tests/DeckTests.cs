@@ -15,41 +15,36 @@ namespace splendor_tests
         }
 
         [Test]
-        public void CanShuffle()
-        {
-            Assert.NotNull("There is no point in testing randomness...");
-        }
-
-        [Test]
         public void CanDrawOneCard()
         {
             var countBeforeDraw = _sut.Count;
 
-            List<object> drawn = null;
-            Assert.IsTrue(_sut.TryDraw(out drawn));
+            _sut.Draw();
+
+            Assert.IsTrue(countBeforeDraw > _sut.Count);
+
+            Assert.IsTrue(countBeforeDraw == _sut.Count + 1);
         }
 
         [Test]
         public void CanDrawThree()
         {
             var countBeforeDraw = _sut.Count;
-            uint drawCount = 3;
 
-            List<object> drawn = null;
+            _sut.Draw(3);
 
-            _sut.TryDraw(out drawn, false, drawCount);
+            Assert.IsTrue(countBeforeDraw > _sut.Count);
 
-            Assert.IsTrue(countBeforeDraw == _sut.Count + drawCount);
+            Assert.IsTrue(countBeforeDraw == _sut.Count + 3);
         }
 
         [Test]
         public void FailsToDrawOnEmptyDeck()
         {
-            List<object> drawn;
             while(!_sut.IsEmpty)
-                Assert.IsTrue(_sut.TryDraw(out drawn));
+                _sut.Draw();
 
-            Assert.IsFalse(_sut.TryDraw(out drawn));
+            Assert.IsTrue(_sut.Draw().Count == 0);
         }
     }
 }
