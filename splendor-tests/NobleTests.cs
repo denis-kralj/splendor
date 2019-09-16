@@ -50,5 +50,12 @@ namespace splendor_tests
 
             Assert.IsTrue(_sut.TryVisit(player));
         }
+
+        [Test]
+        public void CanDetectIfAPlayerIsEligable()
+        {
+            var player = new Player("A name");
+            Assert.IsFalse(_sut.TryVisit(player));
+        }
     }
 }
