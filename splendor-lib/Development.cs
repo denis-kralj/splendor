@@ -2,8 +2,8 @@ namespace splendor_lib
 {
     public class Development
     {
-        private TokenCollection _costInternal;
-        public Development(uint level, uint prestige, Token discounts, TokenCollection cost)
+        private IReadOnlyTokenCollection _costInternal;
+        public Development(uint level, uint prestige, Token discounts, IReadOnlyTokenCollection cost)
         {
             Level = level;
             Prestige = prestige;
