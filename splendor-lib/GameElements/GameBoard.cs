@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,19 @@ namespace splendor_lib
         private List<Noble> _publicNoblesInternal;
         private TokenCollection _boardTokensInternal;
         public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
+
+        internal uint CardCount(Location level1Deck)
+        {
+            switch(level1Deck)
+            {
+                case Location.Level1Deck: return (uint)_lvl1Deck.Count;
+                case Location.Level2Deck: return (uint)_lvl1Deck.Count;
+                case Location.Level3Deck: return (uint)_lvl1Deck.Count;
+                case Location.Public: default:
+                    return (uint)PublicDevelopments.Count;
+            }
+        }
+
         public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
         public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
         public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
