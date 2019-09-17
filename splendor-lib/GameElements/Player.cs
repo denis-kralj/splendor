@@ -23,7 +23,7 @@ namespace splendor_lib
         public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
         public void CollectTokens(TokenColor tokenColor, uint amountToAdd) => _tokensInternal.AddTokens(tokenColor, amountToAdd);
         public uint TokenCount(TokenColor tokenColor) => _tokensInternal.GetCount(tokenColor);
-        public int Discount(TokenColor tokenColor) => _purchasedDevelopmentsInternal.Count(d => d.Discounts == tokenColor);
+        public uint Discount(TokenColor tokenColor) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == tokenColor);
         public bool TryReserve(Development development)
         {
             if (HandFull) return false;
@@ -38,7 +38,7 @@ namespace splendor_lib
 
             foreach (TokenColor tokenColor in TokenUtils.AllTokens)
             {
-                int discountedPrice = (int)price.GetCount(tokenColor) - Discount(tokenColor);
+                uint discountedPrice = price.GetCount(tokenColor) - Discount(tokenColor);
 
                 if (discountedPrice < 1)
                     continue;
@@ -51,7 +51,7 @@ namespace splendor_lib
                 var needGold = discountedPrice - have < 0;
 
                 if (needGold)
-                    usableGold -= (uint)(discountedPrice - have);
+                    usableGold -= (discountedPrice - have);
             }
 
             return true;
