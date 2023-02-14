@@ -36,7 +36,7 @@ public class Player
     {
         uint usableGold = TokenCount(TokenColor.Yellow);
 
-        foreach (TokenColor tokenColor in TokenUtils.AllTokens)
+        foreach (TokenColor tokenColor in Tokens.AllTokens)
         {
             uint discountedPrice = price.GetCount(tokenColor) - Discount(tokenColor);
 
@@ -60,7 +60,7 @@ public class Player
     {
         if (!CanPay(price)) return false;
 
-        foreach (TokenColor key in TokenUtils.AllTokens)
+        foreach (TokenColor key in Tokens.AllTokens)
         {
             var discountedPrice = price.GetCount(key) - Discount(key);
 

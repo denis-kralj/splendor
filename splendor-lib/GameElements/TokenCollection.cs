@@ -14,17 +14,17 @@ public class TokenCollection : IReadOnlyTokenCollection
     public static bool operator !=(TokenCollection obj1, TokenCollection obj2) => !(obj1 == obj2);
     public void AddTokens(TokenCollection tokensToAdd)
     {
-        foreach (TokenColor tokenColor in TokenUtils.AllTokens)
+        foreach (TokenColor tokenColor in Tokens.AllTokens)
             AddTokens(tokenColor, tokensToAdd.GetCount(tokenColor));
     }
     public void AddTokens(TokenColor tokenColor, uint amountToAdd) => _tokensInternal[tokenColor] += amountToAdd;
     public bool TryTake(IReadOnlyTokenCollection tokensToTake)
     {
-        foreach (TokenColor key in TokenUtils.AllTokens)
+        foreach (TokenColor key in Tokens.AllTokens)
             if (GetCount(key) < tokensToTake.GetCount(key))
                 return false;
 
-        foreach (TokenColor key in TokenUtils.AllTokens)
+        foreach (TokenColor key in Tokens.AllTokens)
             _tokensInternal[key] -= tokensToTake.GetCount(key);
 
         return true;
@@ -54,6 +54,6 @@ public class TokenCollection : IReadOnlyTokenCollection
     public override bool Equals(object obj) =>
         (obj != null) && (obj as TokenCollection != null) &&
         (obj as TokenCollection).TotalTokens == this.TotalTokens &&
-        TokenUtils.AllTokens
+        Tokens.AllTokens
         .All(t => (obj as TokenCollection).GetCount(t) == this.GetCount(t));
 }

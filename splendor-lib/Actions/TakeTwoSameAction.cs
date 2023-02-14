@@ -33,12 +33,12 @@ public class TakeTwoSameAction : IGameAction
 
     private bool BoardHasInsufficientTokens(GameBoard board)
     {
-        var color = TokenUtils.AllTokens.First(t => _tokensInternal.GetCount(t) == _tCount);
+        var color = Tokens.AllTokens.First(t => _tokensInternal.GetCount(t) == _tCount);
 
         return board.BoardTokens.GetCount(color) < _minBoardTokenCount;
     }
 
     private bool InvalidTokenCombination() =>
         _tokensInternal.TotalTokens != _tCount ||
-        !TokenUtils.AllTokens.Any(t => _tokensInternal.GetCount(t) == _tCount);
+        !Tokens.AllTokens.Any(t => _tokensInternal.GetCount(t) == _tCount);
 }
