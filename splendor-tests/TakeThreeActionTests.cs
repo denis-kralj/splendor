@@ -12,9 +12,7 @@ namespace splendor_tests
         [OneTimeSetUp]
         public void Setup()
         {
-            const string pathToDevelopments = @"csv-data\developments-data.csv";
-            const string pathToNobles = @"csv-data\nobles-data.csv";
-            GameDataLoader gdl = new GameDataLoader(pathToDevelopments, pathToNobles);
+            GameDataLoader gdl = new GameDataLoader();
 
             _nobles = gdl.LoadNobles();
             _developments = gdl.LoadDevelopments();

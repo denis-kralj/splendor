@@ -6,9 +6,7 @@ namespace splendor_tests
 {
     public class GameBoardTests
     {
-        private const string pathToDevelopments = @"csv-data\developments-data.csv";
-        private const string pathToNobles = @"csv-data\nobles-data.csv";
-        private readonly GameDataLoader gdl = new GameDataLoader(pathToDevelopments, pathToNobles);
+        private readonly GameDataLoader gdl = new GameDataLoader();
         private GameBoard _sut;
 
         [SetUp]

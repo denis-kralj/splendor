@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,9 +15,4 @@
   <ItemGroup>
     <ProjectReference Include="..\splendor-lib\splendor-lib.csproj" />
   </ItemGroup>
-
-  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-    <Copy SourceFiles="..\csv-data\developments-data.csv" DestinationFolder="$(OutDir)csv-data\" />
-    <Copy SourceFiles="..\csv-data\nobles-data.csv" DestinationFolder="$(OutDir)csv-data\" />
-  </Target>
 </Project>
