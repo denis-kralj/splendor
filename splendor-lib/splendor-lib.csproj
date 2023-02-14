@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>splendor_lib</RootNamespace>
   </PropertyGroup>
 
-  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-    <Copy SourceFiles="..\csv-data\developments-data.csv" DestinationFolder="$(OutDir)csv-data\" />
-    <Copy SourceFiles="..\csv-data\nobles-data.csv" DestinationFolder="$(OutDir)csv-data\" />
-  </Target>
+<ItemGroup>
+  <EmbeddedResource Include="csv-data/developments-data.csv" />
+  <EmbeddedResource Include="csv-data/nobles-data.csv" />
+</ItemGroup>
 </Project>

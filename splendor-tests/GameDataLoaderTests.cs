@@ -13,10 +13,8 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            var pathToDevelopments = @"csv-data\developments-data.csv";
-            var pathToNobles = @"csv-data\nobles-data.csv";
 
-            var _sut = new GameDataLoader(pathToDevelopments, pathToNobles);
+            var _sut = new GameDataLoader();
 
             _sutAllDevelopments = _sut.LoadDevelopments();
             _sutAllNobiles = _sut.LoadNobles();

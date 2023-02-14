@@ -8,13 +8,9 @@ namespace splendor_lib
     {
         private const string _headerFirstElementDevelopment = "Level";
         private const string _headerFirstElementNoble = "Prestige";
-        private readonly string _developmentCsvPath;
-        private readonly string _noblesCsvPath;
-        public GameDataLoader(string developmentCsvPath, string noblesCsvPath)
-        {
-            _developmentCsvPath = developmentCsvPath;
-            _noblesCsvPath = noblesCsvPath;
-        }
+        private const string _developmentCsvPath = "csv-data/developments-data.csv";
+        private const string _noblesCsvPath = "csv-data/nobles-data.csv";
+
         public List<Development> LoadDevelopments()
         {
             var output = new List<Development>();
