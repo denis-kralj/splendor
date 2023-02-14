@@ -63,7 +63,7 @@ public class BuyDevelopmentActionTests
     }
 
     [Test]
-    public void ShouldSucceedWithSufficientTokendAndValidDevelopment()
+    public void ShouldSucceedWithSufficientTokensAndValidDevelopment()
     {
         var buyer = new Player("Goku");
         buyer.CollectTokens(new TokenCollection(9, 9, 9, 9, 9, 9));

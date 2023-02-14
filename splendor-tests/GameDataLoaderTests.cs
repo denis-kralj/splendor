@@ -8,7 +8,7 @@ namespace splendor_tests;
 public class GameDataLoaderTests
 {
     private List<Development> _sutAllDevelopments;
-    private List<Noble> _sutAllNobiles;
+    private List<Noble> _sutAllNobles;
 
     [SetUp]
     public void Setup()
@@ -17,7 +17,7 @@ public class GameDataLoaderTests
         var _sut = new GameDataLoader();
 
         _sutAllDevelopments = _sut.LoadDevelopments();
-        _sutAllNobiles = _sut.LoadNobles();
+        _sutAllNobles = _sut.LoadNobles();
     }
 
     [Test]
@@ -55,11 +55,11 @@ public class GameDataLoaderTests
 
     public void LoadAllNobleCards()
     {
-        Assert.AreEqual(10, _sutAllNobiles.Count);
+        Assert.AreEqual(10, _sutAllNobles.Count);
     }
 
     public void AllNobleCardsAreDistinct()
     {
-        Assert.AreEqual(_sutAllNobiles.Count, _sutAllNobiles.Distinct().Count());
+        Assert.AreEqual(_sutAllNobles.Count, _sutAllNobles.Distinct().Count());
     }
 }
