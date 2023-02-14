@@ -10,9 +10,9 @@ public class Development
         _costInternal = cost;
         Discounts = discounts;
     }
-    public uint Level { get; private set; }
-    public uint Prestige { get; private set; }
-    public TokenColor Discounts { get; private set; }
+    public uint Level { get; }
+    public uint Prestige { get; }
+    public TokenColor Discounts { get; }
     public IReadOnlyTokenCollection Cost => _costInternal;
     public static bool operator ==(Development obj1, Development obj2) => obj1 as object != null && obj1.Equals(obj2);
     public static bool operator !=(Development obj1, Development obj2) => !(obj1 == obj2);

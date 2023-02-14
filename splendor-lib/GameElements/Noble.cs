@@ -11,7 +11,7 @@ public class Noble
     }
     public Noble(uint prestige, TokenCollection cost) : this(prestige, new NobleCost(cost)) { }
     public uint Prestige { get; }
-    public NobleCost Requirements { get; private set; }
+    public NobleCost Requirements { get; }
     public bool CanVisit(Player player)
     {
         if (Tokens.AllTokens.Any(t => player.Discount(t) < Requirements.Cost(t)))
