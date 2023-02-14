@@ -1,12 +1,11 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public enum TokenColor
 {
-    public enum TokenColor
-    {
-        Red,
-        Blue,
-        Green,
-        White,
-        Black,
-        Yellow
-    }
+    Red,
+    Blue,
+    Green,
+    White,
+    Black,
+    Yellow
 }

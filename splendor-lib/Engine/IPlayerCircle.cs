@@ -1,9 +1,8 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public interface IPlayerCircle
 {
-    public interface IPlayerCircle
-    {
-        Player Current { get; }
-        bool LastPlayersTurn { get; }
-        void Pass();
-    }
+    Player Current { get; }
+    bool LastPlayersTurn { get; }
+    void Pass();
 }

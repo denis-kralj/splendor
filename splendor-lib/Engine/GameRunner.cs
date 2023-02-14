@@ -1,10 +1,9 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public class GameRunner
 {
-    public class GameRunner
-    {
-        //TODO turn system
-        //TODO win monitor
-        //TODO turn action executor
-        //TODO board state viewer
-    }
+    //TODO turn system
+    //TODO win monitor
+    //TODO turn action executor
+    //TODO board state viewer
 }
