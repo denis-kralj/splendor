@@ -12,16 +12,12 @@ public class Player
     public Player(string name) => SetInitState(name);
     public string PlayerName { get; private set; }
     public uint Prestige => (uint)(_purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige));
-    public uint TotalOwnedTokens => _tokensInternal.TotalTokens;
-    public bool HasTooManyTokens => TotalOwnedTokens > 10;
     public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
     public List<Development> ReservedDevelopments => _reservedDevelopmentsInternal;
     public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
     public bool TryRemoveReserved(Development developmentToBuy) => _reservedDevelopmentsInternal.Remove(developmentToBuy);
     public void BuyDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
-    public void ResetPlayer() => SetInitState(string.Empty);
     public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
-    public void CollectTokens(TokenColor tokenColor, uint amountToAdd) => _tokensInternal.AddTokens(tokenColor, amountToAdd);
     public uint TokenCount(TokenColor tokenColor) => _tokensInternal.GetCount(tokenColor);
     public uint Discount(TokenColor tokenColor) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == tokenColor);
     public bool TryReserve(Development development)
