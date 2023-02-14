@@ -5,12 +5,15 @@ namespace splendor_lib;
 
 public class Player
 {
-    private TokenCollection _tokensInternal;
-    private List<Development> _purchasedDevelopmentsInternal;
-    private List<Noble> _noblesInternal;
-    private List<Development> _reservedDevelopmentsInternal;
-    public Player(string name) => SetInitState(name);
-    public string PlayerName { get; private set; }
+    private TokenCollection _tokensInternal = new TokenCollection();
+    private List<Development> _purchasedDevelopmentsInternal = new List<Development>();
+    private List<Noble> _noblesInternal = new List<Noble>();
+    private List<Development> _reservedDevelopmentsInternal = new List<Development>(3);
+    public Player(string name)
+    {
+        PlayerName = name;
+    }
+    public string PlayerName { get; }
     public uint Prestige => (uint)(_purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige));
     public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
     public List<Development> ReservedDevelopments => _reservedDevelopmentsInternal;
@@ -76,15 +79,5 @@ public class Player
 
         _tokensInternal.TryTake(price);
         return true;
-    }
-    private void SetInitState(string name)
-    {
-        if (!string.IsNullOrEmpty(name))
-            PlayerName = name;
-
-        _tokensInternal = new TokenCollection();
-        _purchasedDevelopmentsInternal = new List<Development>();
-        _noblesInternal = new List<Noble>();
-        _reservedDevelopmentsInternal = new List<Development>(3);
     }
 }
