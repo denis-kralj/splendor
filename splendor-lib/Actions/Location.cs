@@ -1,10 +1,9 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public enum Location
 {
-    public enum Location
-    {
-        Level1Deck,
-        Level2Deck,
-        Level3Deck,
-        Public
-    }
+    Level1Deck,
+    Level2Deck,
+    Level3Deck,
+    Public
 }

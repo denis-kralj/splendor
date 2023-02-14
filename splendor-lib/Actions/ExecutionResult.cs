@@ -1,13 +1,12 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public enum ExecutionResult
 {
-    public enum ExecutionResult
-    {
-        Success,
-        InvalidTokenCombination,
-        InvalidDevelopmentToReserve,
-        InvalidDevelopmentToBuy,
-        InsufficientTokens,
-        HandFull,
-        CantDraw
-    }
+    Success,
+    InvalidTokenCombination,
+    InvalidDevelopmentToReserve,
+    InvalidDevelopmentToBuy,
+    InsufficientTokens,
+    HandFull,
+    CantDraw
 }

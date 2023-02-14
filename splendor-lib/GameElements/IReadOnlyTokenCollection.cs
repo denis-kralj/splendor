@@ -1,8 +1,7 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public interface IReadOnlyTokenCollection
 {
-    public interface IReadOnlyTokenCollection
-    {
-        uint GetCount(TokenColor tokenColor);
-        uint TotalTokens { get; }
-    }
+    uint GetCount(TokenColor tokenColor);
+    uint TotalTokens { get; }
 }

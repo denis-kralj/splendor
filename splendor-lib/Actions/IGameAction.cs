@@ -1,7 +1,6 @@
-namespace splendor_lib
+namespace splendor_lib;
+
+public interface IGameAction
 {
-    public interface IGameAction
-    {
-        bool TryExecuteAction(Player player, GameBoard board, out ExecutionResult result);
-    }
+    bool TryExecuteAction(Player player, GameBoard board, out ExecutionResult result);
 }
