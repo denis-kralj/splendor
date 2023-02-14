@@ -29,5 +29,5 @@ public class TakeThreeAction : IGameAction
     }
     private bool InvalidTokenCombination() =>
         _tokensInternal.TotalTokens > _validTotalCount ||
-        TokenUtils.AllTokens.Any(t => _tokensInternal.GetCount(t) > _validSingleCount);
+        Tokens.AllTokens.Any(t => _tokensInternal.GetCount(t) > _validSingleCount);
 }

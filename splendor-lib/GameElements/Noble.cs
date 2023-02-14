@@ -14,7 +14,7 @@ public class Noble
     public NobleCost Requirements { get; private set; }
     public bool CanVisit(Player player)
     {
-        if (TokenUtils.AllTokens.Any(t => player.Discount(t) < Requirements.Cost(t)))
+        if (Tokens.AllTokens.Any(t => player.Discount(t) < Requirements.Cost(t)))
             return false;
 
         return true;
