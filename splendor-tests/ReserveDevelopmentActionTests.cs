@@ -20,11 +20,11 @@ public class ReserveDevelopmentActionTests
     [Test]
     public void ShouldReserveDevelopmentFromPublicArea()
     {
-        var reservee = new Player("Goku");
+        var reserver = new Player("Goku");
 
         var players = new List<Player>()
             {
-                reservee,
+                reserver,
                 new Player("Vegeta"),
                 new Player("Trunks")
             };
@@ -35,7 +35,7 @@ public class ReserveDevelopmentActionTests
 
         var sut = new ReserveDevelopmentAction(Location.Public, toReserve);
 
-        Assert.IsTrue(sut.TryExecuteAction(reservee, board, out var result));
+        Assert.IsTrue(sut.TryExecuteAction(reserver, board, out var result));
 
         Assert.AreEqual(ExecutionResult.Success, result);
     }
@@ -43,15 +43,15 @@ public class ReserveDevelopmentActionTests
     [Test]
     public void ShouldNotReserveWhenHandFull()
     {
-        var reservee = new Player("Goku");
+        var reserver = new Player("Goku");
 
-        reservee.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
-        reservee.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
-        reservee.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
+        reserver.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
+        reserver.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
+        reserver.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
 
         var players = new List<Player>()
             {
-                reservee,
+                reserver,
                 new Player("Vegeta"),
                 new Player("Trunks")
             };
@@ -62,7 +62,7 @@ public class ReserveDevelopmentActionTests
 
         var sut = new ReserveDevelopmentAction(Location.Public, toReserve);
 
-        Assert.IsFalse(sut.TryExecuteAction(reservee, board, out var result));
+        Assert.IsFalse(sut.TryExecuteAction(reserver, board, out var result));
 
         Assert.AreEqual(ExecutionResult.HandFull, result);
     }
@@ -70,12 +70,12 @@ public class ReserveDevelopmentActionTests
     [Test]
     public void ShouldNotReserveIfNotInPublicSpace()
     {
-        var reservee = new Player("Goku");
+        var reserver = new Player("Goku");
         var fakeDevelopment = new Development(1, 1, TokenColor.Red, new TokenCollection());
 
         var players = new List<Player>()
             {
-                reservee,
+                reserver,
                 new Player("Vegeta"),
                 new Player("Trunks")
             };
@@ -84,7 +84,7 @@ public class ReserveDevelopmentActionTests
 
         var sut = new ReserveDevelopmentAction(Location.Public, fakeDevelopment);
 
-        Assert.IsFalse(sut.TryExecuteAction(reservee, board, out var result));
+        Assert.IsFalse(sut.TryExecuteAction(reserver, board, out var result));
 
         Assert.AreEqual(ExecutionResult.InvalidDevelopmentToReserve, result);
     }
@@ -92,11 +92,11 @@ public class ReserveDevelopmentActionTests
     [Test]
     public void ShouldReserveFromDeck()
     {
-        var reservee = new Player("Goku");
+        var reserver = new Player("Goku");
 
         var players = new List<Player>()
             {
-                reservee,
+                reserver,
                 new Player("Vegeta"),
                 new Player("Trunks")
             };
@@ -105,12 +105,12 @@ public class ReserveDevelopmentActionTests
 
         var sut = new ReserveDevelopmentAction(Location.Level2Deck, null);
 
-        Assert.IsTrue(sut.TryExecuteAction(reservee, board, out var result));
+        Assert.IsTrue(sut.TryExecuteAction(reserver, board, out var result));
 
         Assert.AreEqual(ExecutionResult.Success, result);
 
-        Assert.AreEqual(1, reservee.ReservedDevelopments.Count);
+        Assert.AreEqual(1, reserver.ReservedDevelopments.Count);
 
-        Assert.AreEqual(2, reservee.ReservedDevelopments.First().Level);
+        Assert.AreEqual(2, reserver.ReservedDevelopments.First().Level);
     }
 }

@@ -17,6 +17,7 @@ public class TakeThreeActionTests
         _nobles = gdl.LoadNobles();
         _developments = gdl.LoadDevelopments();
     }
+
     [Test]
     public void CanExecuteInValidConditions()
     {

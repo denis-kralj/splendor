@@ -37,7 +37,7 @@ public class PlayerTests
     }
 
     [Test]
-    public void AquiredDevelopmentsGenerateDiscounts()
+    public void AcquiredDevelopmentsGenerateDiscounts()
     {
         var numberOfBlackDiscounts = 4;
         for (uint i = 0; i < numberOfBlackDiscounts; i++)

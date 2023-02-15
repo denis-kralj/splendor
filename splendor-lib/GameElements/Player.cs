@@ -8,29 +8,36 @@ public class Player : IPlayer
     private TokenCollection _tokensInternal = new TokenCollection();
     private List<Development> _purchasedDevelopmentsInternal = new List<Development>();
     private List<Noble> _noblesInternal = new List<Noble>();
-    private List<Development> _reservedDevelopmentsInternal = new List<Development>(3);
+
     public Player(string name)
     {
         PlayerName = name;
+        ReservedDevelopments = new List<Development>();
+
     }
+
     public string PlayerName { get; }
+    public List<Development> ReservedDevelopments { get; }
+
     public uint Prestige => (uint)(_purchasedDevelopmentsInternal.Sum(d => d.Prestige) + _noblesInternal.Sum(n => n.Prestige));
-    public bool HandFull => _reservedDevelopmentsInternal.Count == 3;
-    public List<Development> ReservedDevelopments => _reservedDevelopmentsInternal;
+    public bool HandFull => ReservedDevelopments.Count == 3;
+
     public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
-    public bool TryRemoveReserved(Development developmentToBuy) => _reservedDevelopmentsInternal.Remove(developmentToBuy);
+    public bool TryRemoveReserved(Development developmentToBuy) => ReservedDevelopments.Remove(developmentToBuy);
     public void BuyDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
     public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
     public uint TokenCount(TokenColor tokenColor) => _tokensInternal.GetCount(tokenColor);
     public uint Discount(TokenColor tokenColor) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == tokenColor);
+
     public bool TryReserve(Development development)
     {
         if (HandFull) return false;
 
-        _reservedDevelopmentsInternal.Add(development);
+        ReservedDevelopments.Add(development);
 
         return true;
     }
+
     public bool CanPay(IReadOnlyTokenCollection price)
     {
         uint usableGold = TokenCount(TokenColor.Yellow);
@@ -55,6 +62,7 @@ public class Player : IPlayer
 
         return true;
     }
+
     public bool TryPay(IReadOnlyTokenCollection price)
     {
         if (!CanPay(price)) return false;

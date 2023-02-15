@@ -2,21 +2,25 @@ namespace splendor_lib;
 
 public class Development
 {
-    private IReadOnlyTokenCollection _costInternal;
     public Development(uint level, uint prestige, TokenColor discounts, IReadOnlyTokenCollection cost)
     {
         Level = level;
         Prestige = prestige;
-        _costInternal = cost;
+        Cost = cost;
         Discounts = discounts;
     }
+
     public uint Level { get; }
     public uint Prestige { get; }
     public TokenColor Discounts { get; }
-    public IReadOnlyTokenCollection Cost => _costInternal;
+    public IReadOnlyTokenCollection Cost { get; }
+
     public static bool operator ==(Development obj1, Development obj2) => obj1 as object != null && obj1.Equals(obj2);
+
     public static bool operator !=(Development obj1, Development obj2) => !(obj1 == obj2);
+
     public override int GetHashCode() => base.GetHashCode();
+
     public override bool Equals(object obj) =>
         (obj != null) && (obj as Development != null) &&
         (obj as Development).Level == this.Level &&

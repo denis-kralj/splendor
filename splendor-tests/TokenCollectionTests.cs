@@ -61,7 +61,7 @@ public class TokenCollectionTests
     public void ShouldFailTryWhenRemovingTokensItDoesNotHave()
     {
         uint redState = 0;
-        _sut.SetCollectionState(redCount: redState);
+        _sut = new TokenCollection(redCount: redState);
 
         Assert.IsFalse(_sut.TryTake(TokenColor.Red, redState + 1));
         Assert.IsFalse(_sut.TryTake(new TokenCollection(redCount: redState + 2)));
@@ -97,7 +97,7 @@ public class TokenCollectionTests
         uint redCount = 11;
         uint yellowCount = 6;
 
-        _sut.SetCollectionState(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
+        _sut = new TokenCollection(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
 
         Assert.AreEqual(_sut.GetCount(TokenColor.Black), blackCount);
         Assert.AreEqual(_sut.GetCount(TokenColor.Blue), blueCount);

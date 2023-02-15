@@ -8,14 +8,17 @@ public class Deck<TCard> : IDeck<TCard>
 {
     private List<TCard> _allCardsInternal;
     private Stack<TCard> _stackInternal;
-    public bool IsEmpty => Count == 0;
-    public int Count => _stackInternal.Count;
+
     public Deck(List<TCard> cards)
     {
         this._allCardsInternal = cards;
         this._stackInternal = new Stack<TCard>(_allCardsInternal);
         Shuffle();
     }
+
+    public bool IsEmpty => Count == 0;
+    public int Count => _stackInternal.Count;
+
     public void Shuffle(bool shuffleEverythingBack = false)
     {
         if (shuffleEverythingBack)
@@ -29,6 +32,7 @@ public class Deck<TCard> : IDeck<TCard>
             .Select(c => c.Card)
         );
     }
+
     public List<TCard> Draw(uint count = 1)
     {
         if (Count < count)

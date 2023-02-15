@@ -7,11 +7,12 @@ public class Noble
     public Noble(uint prestige, NobleRequirements cost)
     {
         Requirements = cost;
-        this.Prestige = prestige;
+        Prestige = prestige;
     }
-    public Noble(uint prestige, TokenCollection cost) : this(prestige, new NobleRequirements(cost)) { }
+
     public uint Prestige { get; }
     public NobleRequirements Requirements { get; }
+
     public bool CanVisit(Player player)
     {
         if (Tokens.AllTokens.Any(t => player.Discount(t) < Requirements.Cost(t)))
@@ -19,6 +20,7 @@ public class Noble
 
         return true;
     }
+
     public bool TryVisit(Player player)
     {
         if (!CanVisit(player))
