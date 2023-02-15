@@ -10,7 +10,7 @@ public class ReserveDevelopmentAction : IGameAction
         _location = location;
         _developmentForReserving = toReserve;
     }
-    public bool TryExecuteAction(Player player, GameBoard board, out ExecutionResult result)
+    public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
         if (player.HandFull)
         {
