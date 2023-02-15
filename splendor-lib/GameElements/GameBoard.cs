@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace splendor_lib;
 
-public class GameBoard
+
+public class GameBoard : IBoard
 {
     private Deck<Development> _lvl1Deck;
     private Deck<Development> _lvl2Deck;

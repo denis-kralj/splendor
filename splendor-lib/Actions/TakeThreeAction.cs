@@ -12,7 +12,7 @@ public class TakeThreeAction : IGameAction
     {
         _tokensInternal = tokensToTake;
     }
-    public bool TryExecuteAction(Player player, GameBoard board, out ExecutionResult result)
+    public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
         if (InvalidTokenCombination())
         {

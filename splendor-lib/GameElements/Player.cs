@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace splendor_lib;
 
-public class Player
+public class Player : IPlayer
 {
     private TokenCollection _tokensInternal = new TokenCollection();
     private List<Development> _purchasedDevelopmentsInternal = new List<Development>();

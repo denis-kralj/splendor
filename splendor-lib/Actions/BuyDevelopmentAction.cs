@@ -8,7 +8,7 @@ public class BuyDevelopmentAction : IGameAction
     {
         _developmentToBuy = developmentToBuy;
     }
-    public bool TryExecuteAction(Player player, GameBoard board, out ExecutionResult result)
+    public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
         if (!(player.ReservedDevelopments.Contains(_developmentToBuy) || board.PublicDevelopments.Contains(_developmentToBuy)))
         {
@@ -32,7 +32,7 @@ public class BuyDevelopmentAction : IGameAction
         return true;
     }
 
-    private void RemoveFromCurrentLocation(GameBoard board, Player player)
+    private void RemoveFromCurrentLocation(IBoard board, IPlayer player)
     {
         player.TryRemoveReserved(_developmentToBuy);
         board.TryRemoveDevelopment(Location.Public, _developmentToBuy, out var taken);

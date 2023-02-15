@@ -12,7 +12,7 @@ public class TakeTwoSameAction : IGameAction
     {
         _tokensInternal = tokensToTake;
     }
-    public bool TryExecuteAction(Player player, GameBoard board, out ExecutionResult result)
+    public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
         if (InvalidTokenCombination())
         {
@@ -31,7 +31,7 @@ public class TakeTwoSameAction : IGameAction
         return board.TryTakeTokensFormBoard(_tokensInternal);
     }
 
-    private bool BoardHasInsufficientTokens(GameBoard board)
+    private bool BoardHasInsufficientTokens(IBoard board)
     {
         var color = Tokens.AllTokens.First(t => _tokensInternal.GetCount(t) == _tCount);
 
