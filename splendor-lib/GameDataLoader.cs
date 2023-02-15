@@ -51,7 +51,7 @@ public class GameDataLoader
         var onyxDevelopmentPrice = uint.Parse(parameters[4]);
         var sapphireDevelopmentPrice = uint.Parse(parameters[5]);
 
-        var cost = new NobleCost(new TokenCollection(diamondDevelopmentPrice, onyxDevelopmentPrice, sapphireDevelopmentPrice, emeraldDevelopmentPrice, rubyDevelopmentPrice));
+        var cost = new NobleRequirements(new TokenCollection(diamondDevelopmentPrice, onyxDevelopmentPrice, sapphireDevelopmentPrice, emeraldDevelopmentPrice, rubyDevelopmentPrice));
 
         return new Noble(prestige, cost);
     }
