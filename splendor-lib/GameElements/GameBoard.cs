@@ -6,24 +6,23 @@ namespace splendor_lib;
 
 public class GameBoard : IBoard
 {
-    private Deck<Development> _lvl1Deck;
-    private Deck<Development> _lvl2Deck;
-    private Deck<Development> _lvl3Deck;
-    private Deck<Noble> _noblesDeck;
+    private IDeck<Development> _lvl1Deck;
+    private IDeck<Development> _lvl2Deck;
+    private IDeck<Development> _lvl3Deck;
+    private IDeck<Noble> _noblesDeck;
     private List<Development> _boardDevelopmentsInternal;
     private List<Noble> _publicNoblesInternal;
     private TokenCollection _boardTokensInternal;
     public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
     public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
     public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
-    public GameBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments) => SetupBoard(playerCount, nobles, developments);
-    public void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments)
+    public GameBoard(PlayerCount playerCount, List<Noble> allNobles, List<Development> allDevelopments)
     {
-        LoadDecks(nobles, developments);
+        InitTokens(playerCount);
+        LoadDecks(allNobles, allDevelopments);
         ShuffleAllDecks();
         DrawInitialBoardDevelopments();
         DrawNobles((uint)playerCount);
-        InitTokens(playerCount);
     }
     public void AddTokensToBoard(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
     public bool TryTakeTokensFormBoard(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
@@ -37,7 +36,7 @@ public class GameBoard : IBoard
             case Location.Level3Deck: return TakeFromDeck(_lvl3Deck, out actuallyTaken);
         }
     }
-    private bool TakeFromDeck(Deck<Development> deck, out Development actuallyTaken)
+    private bool TakeFromDeck(IDeck<Development> deck, out Development actuallyTaken)
     {
         actuallyTaken = deck.IsEmpty ? null : deck.Draw().First();
 
