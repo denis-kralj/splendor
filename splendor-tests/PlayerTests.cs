@@ -104,7 +104,7 @@ public class PlayerTests
     {
         uint noblePrestige = 2;
 
-        var noble = new Noble(noblePrestige, new NobleCost());
+        var noble = new Noble(noblePrestige, new NobleRequirements(new TokenCollection()));
         _sut.TakeNoble(noble);
 
         Assert.AreEqual(_sut.Prestige, noblePrestige);
