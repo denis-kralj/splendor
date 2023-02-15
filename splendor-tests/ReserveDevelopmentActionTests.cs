@@ -45,9 +45,9 @@ public class ReserveDevelopmentActionTests
     {
         var reserver = new Player("Goku");
 
-        reserver.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
-        reserver.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
-        reserver.TryReserve(new Development(1, 1, TokenColor.Red, new TokenCollection()));
+        reserver.TryReserve(new Development(1, 1, Token.Ruby, new TokenCollection()));
+        reserver.TryReserve(new Development(1, 1, Token.Ruby, new TokenCollection()));
+        reserver.TryReserve(new Development(1, 1, Token.Ruby, new TokenCollection()));
 
         var players = new List<Player>()
             {
@@ -71,7 +71,7 @@ public class ReserveDevelopmentActionTests
     public void ShouldNotReserveIfNotInPublicSpace()
     {
         var reserver = new Player("Goku");
-        var fakeDevelopment = new Development(1, 1, TokenColor.Red, new TokenCollection());
+        var fakeDevelopment = new Development(1, 1, Token.Ruby, new TokenCollection());
 
         var players = new List<Player>()
             {

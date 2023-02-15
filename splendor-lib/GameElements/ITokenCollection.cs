@@ -6,7 +6,7 @@ public interface ITokenCollection
     bool AreAllSameType { get; }
 
     void AddTokens(TokenCollection tokensToAdd);
-    void AddTokens(TokenColor tokenColor, uint amountToAdd);
+    void AddTokens(Token type, uint amountToAdd);
     bool TryTake(IReadOnlyTokenCollection tokensToTake);
-    bool TryTake(TokenColor tokenType, uint count);
+    bool TryTake(Token type, uint count);
 }

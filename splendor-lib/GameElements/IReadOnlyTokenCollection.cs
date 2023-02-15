@@ -4,5 +4,5 @@ public interface IReadOnlyTokenCollection
 {
     uint TotalTokens { get; }
 
-    uint GetCount(TokenColor tokenColor);
+    uint GetCount(Token type);
 }

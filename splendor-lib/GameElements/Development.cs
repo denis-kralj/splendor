@@ -2,7 +2,7 @@ namespace splendor_lib;
 
 public class Development
 {
-    public Development(uint level, uint prestige, TokenColor discounts, IReadOnlyTokenCollection cost)
+    public Development(uint level, uint prestige, Token discounts, IReadOnlyTokenCollection cost)
     {
         Level = level;
         Prestige = prestige;
@@ -12,7 +12,7 @@ public class Development
 
     public uint Level { get; }
     public uint Prestige { get; }
-    public TokenColor Discounts { get; }
+    public Token Discounts { get; }
     public IReadOnlyTokenCollection Cost { get; }
 
     public static bool operator ==(Development obj1, Development obj2) => obj1 as object != null && obj1.Equals(obj2);

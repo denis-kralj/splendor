@@ -6,7 +6,6 @@
   </PropertyGroup>
 
 <ItemGroup>
-  <EmbeddedResource Include="csv-data/developments-data.csv" />
-  <EmbeddedResource Include="csv-data/nobles-data.csv" />
+  <EmbeddedResource Include="csv-data/*.csv" />
 </ItemGroup>
 </Project>

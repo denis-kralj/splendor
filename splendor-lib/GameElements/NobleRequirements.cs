@@ -6,5 +6,5 @@ public class NobleRequirements
 
     public NobleRequirements(TokenCollection cost) => _requirementsInternal = cost;
 
-    public uint Cost(TokenColor tokenColor) => _requirementsInternal.GetCount(tokenColor);
+    public uint Cost(Token type) => _requirementsInternal.GetCount(type);
 }

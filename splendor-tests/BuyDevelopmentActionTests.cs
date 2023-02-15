@@ -22,7 +22,7 @@ public class BuyDevelopmentActionTests
     [Test]
     public void ShouldFailOnInvalidDevelopment()
     {
-        var invalidDevelopment = new Development(11, 11, TokenColor.Black, new TokenCollection());
+        var invalidDevelopment = new Development(11, 11, Token.Onyx, new TokenCollection());
         var sut = new BuyDevelopmentAction(invalidDevelopment);
 
         var buyer = new Player("Goku");
