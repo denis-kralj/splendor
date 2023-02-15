@@ -5,11 +5,13 @@ public class ReserveDevelopmentAction : IGameAction
     private Location _location;
     private Development _developmentForReserving;
     private TokenCollection goldPayDay = new TokenCollection(yellowCount: 1);
+
     public ReserveDevelopmentAction(Location location, Development toReserve = null)
     {
         _location = location;
         _developmentForReserving = toReserve;
     }
+
     public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
         if (player.HandFull)

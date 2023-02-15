@@ -13,19 +13,19 @@ public class NobleTests
     [SetUp]
     public void SetUp()
     {
-        _sut = new Noble(3, new TokenCollection(white, black, blue));
+        _sut = new Noble(3, new NobleRequirements(new TokenCollection(white, black, blue)));
     }
 
     [Test]
     public void HasRightRequirements()
     {
-        uint expectedRedReqirement = 0, expectedGreenReqirement = 0;
+        uint expectedRedRequirement = 0, expectedGreenRequirement = 0;
 
         Assert.AreEqual(blue, _sut.Requirements.Cost(TokenColor.Blue));
         Assert.AreEqual(white, _sut.Requirements.Cost(TokenColor.White));
         Assert.AreEqual(black, _sut.Requirements.Cost(TokenColor.Black));
-        Assert.AreEqual(expectedGreenReqirement, _sut.Requirements.Cost(TokenColor.Green));
-        Assert.AreEqual(expectedRedReqirement, _sut.Requirements.Cost(TokenColor.Red));
+        Assert.AreEqual(expectedGreenRequirement, _sut.Requirements.Cost(TokenColor.Green));
+        Assert.AreEqual(expectedRedRequirement, _sut.Requirements.Cost(TokenColor.Red));
     }
 
     [Test]
@@ -52,7 +52,7 @@ public class NobleTests
     }
 
     [Test]
-    public void CanDetectIfAPlayerIsEligable()
+    public void CanDetectIfAPlayerIsEligible()
     {
         var player = new Player("A name");
         Assert.IsFalse(_sut.CanVisit(player));

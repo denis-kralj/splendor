@@ -13,9 +13,7 @@ public class GameBoard : IBoard
     private List<Development> _boardDevelopmentsInternal;
     private List<Noble> _publicNoblesInternal;
     private TokenCollection _boardTokensInternal;
-    public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
-    public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
-    public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
+
     public GameBoard(PlayerCount playerCount, List<Noble> allNobles, List<Development> allDevelopments)
     {
         InitTokens(playerCount);
@@ -24,8 +22,14 @@ public class GameBoard : IBoard
         DrawInitialBoardDevelopments();
         DrawNobles((uint)playerCount);
     }
+
+    public List<Noble> BoardNobles => new List<Noble>(_publicNoblesInternal);
+    public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
+    public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
+
     public void AddTokensToBoard(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
     public bool TryTakeTokensFormBoard(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
+
     public bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken)
     {
         switch (location)
@@ -36,12 +40,14 @@ public class GameBoard : IBoard
             case Location.Level3Deck: return TakeFromDeck(_lvl3Deck, out actuallyTaken);
         }
     }
+
     private bool TakeFromDeck(IDeck<Development> deck, out Development actuallyTaken)
     {
         actuallyTaken = deck.IsEmpty ? null : deck.Draw().First();
 
         return actuallyTaken != null;
     }
+
     private bool TakeFromPublic(Development developmentToTake, out Development actuallyTaken)
     {
         if (PublicDevelopments.Contains(developmentToTake))
@@ -54,6 +60,7 @@ public class GameBoard : IBoard
         actuallyTaken = null;
         return false;
     }
+
     private void InitTokens(PlayerCount playerCount)
     {
         switch (playerCount)
@@ -70,6 +77,7 @@ public class GameBoard : IBoard
                 break;
         }
     }
+
     private void LoadDecks(List<Noble> nobles, List<Development> developments)
     {
         _lvl1Deck = new Deck<Development>(developments.Where(d => d.Level == 1).ToList());
@@ -77,6 +85,7 @@ public class GameBoard : IBoard
         _lvl3Deck = new Deck<Development>(developments.Where(d => d.Level == 3).ToList());
         _noblesDeck = new Deck<Noble>(nobles);
     }
+
     private void ShuffleAllDecks()
     {
         _lvl1Deck.Shuffle(true);
@@ -84,6 +93,7 @@ public class GameBoard : IBoard
         _lvl3Deck.Shuffle(true);
         _noblesDeck.Shuffle(true);
     }
+
     private void DrawInitialBoardDevelopments()
     {
         uint drawPerDeck = 4;
@@ -94,5 +104,9 @@ public class GameBoard : IBoard
         _boardDevelopmentsInternal.AddRange(_lvl2Deck.Draw(drawPerDeck));
         _boardDevelopmentsInternal.AddRange(_lvl3Deck.Draw(drawPerDeck));
     }
-    private void DrawNobles(uint playerCount) => _publicNoblesInternal = _noblesDeck.Draw(playerCount + 1);
+
+    private void DrawNobles(uint playerCount)
+    {
+        _publicNoblesInternal = _noblesDeck.Draw(playerCount + 1);
+    }
 }

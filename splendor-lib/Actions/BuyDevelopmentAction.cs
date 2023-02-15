@@ -8,9 +8,10 @@ public class BuyDevelopmentAction : IGameAction
     {
         _developmentToBuy = developmentToBuy;
     }
+
     public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
-        if (!(player.ReservedDevelopments.Contains(_developmentToBuy) || board.PublicDevelopments.Contains(_developmentToBuy)))
+        if (DevelopmentIsNotInValidLocation(player, board))
         {
             result = ExecutionResult.InvalidDevelopmentToBuy;
             return false;
@@ -23,13 +24,19 @@ public class BuyDevelopmentAction : IGameAction
         }
 
         player.TryPay(_developmentToBuy.Cost);
-
         RemoveFromCurrentLocation(board, player);
-
         player.BuyDevelopment(_developmentToBuy);
 
         result = ExecutionResult.Success;
         return true;
+    }
+
+    private bool DevelopmentIsNotInValidLocation(IPlayer player, IBoard board)
+    {
+        return !(
+            player.ReservedDevelopments.Contains(_developmentToBuy) ||
+            board.PublicDevelopments.Contains(_developmentToBuy)
+        );
     }
 
     private void RemoveFromCurrentLocation(IBoard board, IPlayer player)

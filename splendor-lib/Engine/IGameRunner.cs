@@ -8,6 +8,7 @@ public interface IGameRunner
     public IPlayer CurrentPlayer { get; }
     public IBoard GameBoard { get; }
     public bool IsEndgame { get; }
+
     public void StartGame(IPlayer[] orderedPlayers);
     public void PassTurn();
     public void CurrentPlayerTakeAction(IGameAction action);

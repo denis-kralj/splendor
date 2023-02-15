@@ -4,14 +4,15 @@ namespace splendor_lib;
 
 public class TakeTwoSameAction : IGameAction
 {
+    private TokenCollection _tokensInternal;
     private const uint _tCount = 2;
     private const uint _minBoardTokenCount = 4;
-    private TokenCollection _tokensInternal;
 
     public TakeTwoSameAction(TokenCollection tokensToTake)
     {
         _tokensInternal = tokensToTake;
     }
+
     public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
     {
         if (InvalidTokenCombination())
