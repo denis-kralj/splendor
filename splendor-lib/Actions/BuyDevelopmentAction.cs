@@ -35,6 +35,6 @@ public class BuyDevelopmentAction : IGameAction
     private void RemoveFromCurrentLocation(IBoard board, IPlayer player)
     {
         player.TryRemoveReserved(_developmentToBuy);
-        board.TryRemoveDevelopment(Location.Public, _developmentToBuy, out var taken);
+        board.TryRemoveDevelopment(Location.Public, _developmentToBuy, out _);
     }
 }
