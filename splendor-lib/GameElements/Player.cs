@@ -26,8 +26,8 @@ public class Player : IPlayer
     public bool TryRemoveReserved(Development developmentToBuy) => ReservedDevelopments.Remove(developmentToBuy);
     public void BuyDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
     public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
-    public uint TokenCount(TokenColor tokenColor) => _tokensInternal.GetCount(tokenColor);
-    public uint Discount(TokenColor tokenColor) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == tokenColor);
+    public uint TokenCount(Token type) => _tokensInternal.GetCount(type);
+    public uint Discount(Token type) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == type);
 
     public bool TryReserve(Development development)
     {
@@ -40,16 +40,16 @@ public class Player : IPlayer
 
     public bool CanPay(IReadOnlyTokenCollection price)
     {
-        uint usableGold = TokenCount(TokenColor.Yellow);
+        uint usableGold = TokenCount(Token.Gold);
 
-        foreach (TokenColor tokenColor in Tokens.AllTokens)
+        foreach (Token type in Tokens.AllTokens)
         {
-            uint discountedPrice = price.GetCount(tokenColor) - Discount(tokenColor);
+            uint discountedPrice = price.GetCount(type) - Discount(type);
 
             if (discountedPrice < 1)
                 continue;
 
-            uint have = TokenCount(tokenColor);
+            uint have = TokenCount(type);
 
             if (discountedPrice > usableGold + have)
                 return false;
@@ -67,19 +67,19 @@ public class Player : IPlayer
     {
         if (!CanPay(price)) return false;
 
-        foreach (TokenColor key in Tokens.AllTokens)
+        foreach (Token type in Tokens.AllTokens)
         {
-            var discountedPrice = price.GetCount(key) - Discount(key);
+            var discountedPrice = price.GetCount(type) - Discount(type);
 
             if (discountedPrice < 1)
                 continue;
 
-            uint goldDiff = (uint)(discountedPrice - TokenCount(key));
+            uint goldDiff = (uint)(discountedPrice - TokenCount(type));
 
             if (goldDiff > 0)
             {
-                _tokensInternal.TryTake(TokenColor.Yellow, goldDiff);
-                _tokensInternal.AddTokens(key, goldDiff);
+                _tokensInternal.TryTake(Token.Gold, goldDiff);
+                _tokensInternal.AddTokens(type, goldDiff);
             }
             else
                 return false;

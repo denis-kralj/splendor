@@ -12,9 +12,9 @@ public interface IPlayer
     void BuyDevelopment(Development development);
     bool CanPay(IReadOnlyTokenCollection price);
     void CollectTokens(TokenCollection tokens);
-    uint Discount(TokenColor tokenColor);
+    uint Discount(Token type);
     void TakeNoble(Noble noble);
-    uint TokenCount(TokenColor tokenColor);
+    uint TokenCount(Token type);
     bool TryPay(IReadOnlyTokenCollection price);
     bool TryRemoveReserved(Development developmentToBuy);
     bool TryReserve(Development development);

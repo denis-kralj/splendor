@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace splendor_lib;
 
@@ -8,14 +9,31 @@ public class GameDataLoader
 {
     private const string _headerFirstElementDevelopment = "Level";
     private const string _headerFirstElementNoble = "Prestige";
-    private const string _developmentCsvPath = "csv-data/developments-data.csv";
-    private const string _noblesCsvPath = "csv-data/nobles-data.csv";
+    private const string _developmentCsvPath = "splendor_lib.csv_data.developments-data.csv";
+    private const string _noblesCsvPath = "splendor_lib.csv_data.nobles-data.csv";
+
+    private readonly string _developmentCsvContent = string.Empty;
+    private readonly string _noblesCsvContent = string.Empty;
+
+    public GameDataLoader()
+    {
+        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_developmentCsvPath))
+        using (StreamReader reader = new StreamReader(stream))
+        {
+            _developmentCsvContent = reader.ReadToEnd();
+        }
+        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_noblesCsvPath))
+        using (StreamReader reader = new StreamReader(stream))
+        {
+            _noblesCsvContent = reader.ReadToEnd();
+        }
+    }
 
     public List<Development> LoadDevelopments()
     {
         var output = new List<Development>();
 
-        foreach (var line in File.ReadAllLines(_developmentCsvPath))
+        foreach (var line in _developmentCsvContent.Split(Environment.NewLine))
         {
             var elements = line.Split(new[] { ',' });
             if (IsHeader(elements[0]))
@@ -30,7 +48,7 @@ public class GameDataLoader
     {
         var output = new List<Noble>();
 
-        foreach (var line in File.ReadAllLines(_noblesCsvPath))
+        foreach (var line in _noblesCsvContent.Split(Environment.NewLine))
         {
             var elements = line.Split(new[] { ',' });
             if (IsHeader(elements[0]))
@@ -60,7 +78,7 @@ public class GameDataLoader
     {
         var level = uint.Parse(parameters[0]);
         var prestige = uint.Parse(parameters[1]);
-        TokenColor tokenColor = (TokenColor)Enum.Parse(typeof(TokenColor), parameters[2], true);
+        Token type = (Token)Enum.Parse(typeof(Token), parameters[2], true);
         var diamondPrice = uint.Parse(parameters[3]);
         var sapphirePrice = uint.Parse(parameters[4]);
         var emeraldPrice = uint.Parse(parameters[5]);
@@ -69,7 +87,7 @@ public class GameDataLoader
 
         var price = new TokenCollection(diamondPrice, onyxPrice, sapphirePrice, emeraldPrice, rubyPrice, 0);
 
-        return new Development(level, prestige, tokenColor, price);
+        return new Development(level, prestige, type, price);
     }
     private bool IsHeader(string element) =>
         element == _headerFirstElementDevelopment ||

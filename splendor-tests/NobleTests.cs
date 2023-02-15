@@ -21,11 +21,11 @@ public class NobleTests
     {
         uint expectedRedRequirement = 0, expectedGreenRequirement = 0;
 
-        Assert.AreEqual(blue, _sut.Requirements.Cost(TokenColor.Blue));
-        Assert.AreEqual(white, _sut.Requirements.Cost(TokenColor.White));
-        Assert.AreEqual(black, _sut.Requirements.Cost(TokenColor.Black));
-        Assert.AreEqual(expectedGreenRequirement, _sut.Requirements.Cost(TokenColor.Green));
-        Assert.AreEqual(expectedRedRequirement, _sut.Requirements.Cost(TokenColor.Red));
+        Assert.AreEqual(blue, _sut.Requirements.Cost(Token.Sapphire));
+        Assert.AreEqual(white, _sut.Requirements.Cost(Token.Diamond));
+        Assert.AreEqual(black, _sut.Requirements.Cost(Token.Onyx));
+        Assert.AreEqual(expectedGreenRequirement, _sut.Requirements.Cost(Token.Emerald));
+        Assert.AreEqual(expectedRedRequirement, _sut.Requirements.Cost(Token.Ruby));
     }
 
     [Test]
@@ -42,11 +42,11 @@ public class NobleTests
         var player = new Player("A name");
 
         for (int i = 0; i < black; i++)
-            player.BuyDevelopment(new Development(0, 0, TokenColor.Black, new TokenCollection()));
+            player.BuyDevelopment(new Development(0, 0, Token.Onyx, new TokenCollection()));
         for (int i = 0; i < blue; i++)
-            player.BuyDevelopment(new Development(0, 0, TokenColor.Blue, new TokenCollection()));
+            player.BuyDevelopment(new Development(0, 0, Token.Sapphire, new TokenCollection()));
         for (int i = 0; i < white; i++)
-            player.BuyDevelopment(new Development(0, 0, TokenColor.White, new TokenCollection()));
+            player.BuyDevelopment(new Development(0, 0, Token.Diamond, new TokenCollection()));
 
         Assert.IsTrue(_sut.TryVisit(player));
     }

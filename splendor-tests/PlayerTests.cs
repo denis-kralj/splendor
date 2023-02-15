@@ -17,12 +17,12 @@ public class PlayerTests
     [Test]
     public void PlayerIsInitializedWithoutTokens()
     {
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Black) == 0);
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Blue) == 0);
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Green) == 0);
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Red) == 0);
-        Assert.IsTrue(_sut.TokenCount(TokenColor.White) == 0);
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Yellow) == 0);
+        Assert.IsTrue(_sut.TokenCount(Token.Onyx) == 0);
+        Assert.IsTrue(_sut.TokenCount(Token.Sapphire) == 0);
+        Assert.IsTrue(_sut.TokenCount(Token.Emerald) == 0);
+        Assert.IsTrue(_sut.TokenCount(Token.Ruby) == 0);
+        Assert.IsTrue(_sut.TokenCount(Token.Diamond) == 0);
+        Assert.IsTrue(_sut.TokenCount(Token.Gold) == 0);
     }
 
     [Test]
@@ -32,8 +32,8 @@ public class PlayerTests
         uint blackCount = 1;
         _sut.CollectTokens(new TokenCollection(yellowCount: yellowCount, blackCount: blackCount));
 
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Yellow) == yellowCount);
-        Assert.IsTrue(_sut.TokenCount(TokenColor.Black) == blackCount);
+        Assert.IsTrue(_sut.TokenCount(Token.Gold) == yellowCount);
+        Assert.IsTrue(_sut.TokenCount(Token.Onyx) == blackCount);
     }
 
     [Test]
@@ -41,19 +41,19 @@ public class PlayerTests
     {
         var numberOfBlackDiscounts = 4;
         for (uint i = 0; i < numberOfBlackDiscounts; i++)
-            _sut.BuyDevelopment(new Development(i, 0, TokenColor.Black, new TokenCollection()));
+            _sut.BuyDevelopment(new Development(i, 0, Token.Onyx, new TokenCollection()));
 
-        Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(TokenColor.Black));
+        Assert.AreEqual(numberOfBlackDiscounts, _sut.Discount(Token.Onyx));
     }
 
     [Test]
     public void FailsToReserveWhenHandFull()
     {
         var price = new TokenCollection();
-        Assert.IsTrue(_sut.TryReserve(new Development(1, 0, TokenColor.Black, price)));
-        Assert.IsTrue(_sut.TryReserve(new Development(2, 0, TokenColor.Black, price)));
-        Assert.IsTrue(_sut.TryReserve(new Development(3, 0, TokenColor.Black, price)));
-        Assert.IsFalse(_sut.TryReserve(new Development(4, 0, TokenColor.Black, price)));
+        Assert.IsTrue(_sut.TryReserve(new Development(1, 0, Token.Onyx, price)));
+        Assert.IsTrue(_sut.TryReserve(new Development(2, 0, Token.Onyx, price)));
+        Assert.IsTrue(_sut.TryReserve(new Development(3, 0, Token.Onyx, price)));
+        Assert.IsFalse(_sut.TryReserve(new Development(4, 0, Token.Onyx, price)));
     }
 
     [Test]
@@ -62,7 +62,7 @@ public class PlayerTests
         var scored = new uint[] { 1, 2, 3 };
 
         foreach (var score in scored)
-            _sut.BuyDevelopment(new Development(1, score, TokenColor.Black, new TokenCollection()));
+            _sut.BuyDevelopment(new Development(1, score, Token.Onyx, new TokenCollection()));
 
         Assert.AreEqual(scored.ToList().Sum(e => e), _sut.Prestige);
     }
