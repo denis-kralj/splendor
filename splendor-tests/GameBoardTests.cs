@@ -16,25 +16,25 @@ public class GameBoardTests
     }
 
     [Test]
-    public void InitializesCorrectly()
+    public void HasCorrectCountOfNoblesBasedOnPlayerCount()
     {
         var playerCount = 1;
 
         while (playerCount++ < 5)
         {
-            _sut.SetupBoard((PlayerCount)playerCount, gdl.LoadNobles(), gdl.LoadDevelopments());
+            _sut = new GameBoard((PlayerCount)playerCount, gdl.LoadNobles(), gdl.LoadDevelopments());
             Assert.AreEqual(playerCount, _sut.BoardNobles.Count - 1);
         }
     }
 
     [Test]
-    public void HasInitialTokens()
+    public void HasCorrectInitialTokensBasedOnPlayerCount()
     {
         var playerCount = 1;
 
         while (playerCount++ < 5)
         {
-            _sut.SetupBoard((PlayerCount)playerCount, gdl.LoadNobles(), gdl.LoadDevelopments());
+            _sut = new GameBoard((PlayerCount)playerCount, gdl.LoadNobles(), gdl.LoadDevelopments());
             var tokens = _sut.BoardTokens;
             TokenCollection expectedTokens = null;
             switch (playerCount)
@@ -55,7 +55,7 @@ public class GameBoardTests
     }
 
     [Test]
-    public void CanRecieveTokens()
+    public void CanReceiveTokens()
     {
         uint yellowCount = 2;
         uint redCount = 1;

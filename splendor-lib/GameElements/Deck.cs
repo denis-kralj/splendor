@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace splendor_lib;
 
-public class Deck<TCard>
+public class Deck<TCard> : IDeck<TCard>
 {
     private List<TCard> _allCardsInternal;
     private Stack<TCard> _stackInternal;
@@ -16,17 +16,18 @@ public class Deck<TCard>
         this._stackInternal = new Stack<TCard>(_allCardsInternal);
         Shuffle();
     }
-    public void Shuffle(bool isReshuffle = false)
+    public void Shuffle(bool shuffleEverythingBack = false)
     {
-        if (isReshuffle)
+        if (shuffleEverythingBack)
             this._stackInternal = new Stack<TCard>(_allCardsInternal);
 
         var seed = new Random();
-        _stackInternal = _stackInternal
-          .Select(c => new { Index = seed.Next(), Card = c })
-          .OrderBy(c => c.Index)
-          .Select(c => c.Card)
-          .ToStack();
+        _stackInternal = new Stack<TCard>(
+            _stackInternal
+            .Select(c => new { Index = seed.Next(), Card = c })
+            .OrderBy(c => c.Index)
+            .Select(c => c.Card)
+        );
     }
     public List<TCard> Draw(uint count = 1)
     {
@@ -39,8 +40,6 @@ public class Deck<TCard>
 
 internal static class DeckExtensions
 {
-    public static Stack<T> ToStack<T>(this IEnumerable<T> collection)
-        => new Stack<T>(collection);
     public static List<T> Pop<T>(this Stack<T> stack, uint amount)
     {
         var result = new List<T>((int)amount);

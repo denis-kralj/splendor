@@ -9,7 +9,6 @@ public interface IBoard
     List<Development> PublicDevelopments { get; }
 
     void AddTokensToBoard(TokenCollection tokensToReturnToBoard);
-    void SetupBoard(PlayerCount playerCount, List<Noble> nobles, List<Development> developments);
     bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken);
     bool TryTakeTokensFormBoard(TokenCollection tokensToGetFromBoard);
 }
