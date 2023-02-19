@@ -19,7 +19,7 @@ public class TokenCollectionTests
         uint tokenCountToAdd = 3;
         var countBefore = _sut.TotalTokens;
 
-        _sut.AddTokens(new TokenCollection(whiteCount: tokenCountToAdd));
+        _sut.AddTokens(new TokenCollection(diamondCount: tokenCountToAdd));
 
         Assert.AreEqual(countBefore + tokenCountToAdd, _sut.TotalTokens);
     }
@@ -44,13 +44,13 @@ public class TokenCollectionTests
         uint blueRemoveCount = 1;
         uint totalBeforeAdd = _sut.TotalTokens;
 
-        _sut.AddTokens(new TokenCollection(blackCount: blackAddCount, blueCount: blueAddCount));
+        _sut.AddTokens(new TokenCollection(onyxCount: blackAddCount, sapphireCount: blueAddCount));
 
         var totalAfterAdd = totalBeforeAdd + blackAddCount + blueAddCount;
 
         Assert.AreEqual(totalAfterAdd, _sut.TotalTokens);
 
-        Assert.IsTrue(_sut.TryTake(new TokenCollection(blackCount: blackRemoveCount, blueCount: blueRemoveCount)));
+        Assert.IsTrue(_sut.TryTake(new TokenCollection(onyxCount: blackRemoveCount, sapphireCount: blueRemoveCount)));
 
         var totalAfterTake = totalAfterAdd - blackRemoveCount - blueRemoveCount;
 
@@ -61,10 +61,10 @@ public class TokenCollectionTests
     public void ShouldFailTryWhenRemovingTokensItDoesNotHave()
     {
         uint redState = 0;
-        _sut = new TokenCollection(redCount: redState);
+        _sut = new TokenCollection(rubyCount: redState);
 
         Assert.IsFalse(_sut.TryTake(Token.Ruby, redState + 1));
-        Assert.IsFalse(_sut.TryTake(new TokenCollection(redCount: redState + 2)));
+        Assert.IsFalse(_sut.TryTake(new TokenCollection(rubyCount: redState + 2)));
     }
 
     [Test]
