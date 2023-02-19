@@ -8,22 +8,22 @@ public class TokenCollection : IReadOnlyTokenCollection, ITokenCollection
     private Dictionary<Token, uint> _tokensInternal;
 
     public TokenCollection(
-        uint  whiteCount = 0,
-        uint  blackCount = 0,
-        uint   blueCount = 0,
-        uint  greenCount = 0,
-        uint    redCount = 0,
-        uint yellowCount = 0
+        uint  diamondCount = 0,
+        uint     onyxCount = 0,
+        uint sapphireCount = 0,
+        uint  emeraldCount = 0,
+        uint     rubyCount = 0,
+        uint     goldCount = 0
     )
     {
         _tokensInternal = new Dictionary<Token, uint>
             {
-                { Token.Diamond,  whiteCount  },
-                { Token.Onyx,     blackCount  },
-                { Token.Sapphire, blueCount   },
-                { Token.Emerald,  greenCount  },
-                { Token.Ruby,     redCount    },
-                { Token.Gold,     yellowCount }
+                { Token.Diamond,  diamondCount  },
+                { Token.Onyx,     onyxCount  },
+                { Token.Sapphire, sapphireCount   },
+                { Token.Emerald,  emeraldCount  },
+                { Token.Ruby,     rubyCount    },
+                { Token.Gold,     goldCount }
             };
     }
 

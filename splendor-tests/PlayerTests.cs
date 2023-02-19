@@ -30,7 +30,7 @@ public class PlayerTests
     {
         uint yellowCount = 2;
         uint blackCount = 1;
-        _sut.CollectTokens(new TokenCollection(yellowCount: yellowCount, blackCount: blackCount));
+        _sut.CollectTokens(new TokenCollection(goldCount: yellowCount, onyxCount: blackCount));
 
         Assert.IsTrue(_sut.TokenCount(Token.Gold) == yellowCount);
         Assert.IsTrue(_sut.TokenCount(Token.Onyx) == blackCount);
@@ -73,12 +73,12 @@ public class PlayerTests
         uint blackCount = 3;
         uint blueCount = 2;
 
-        _sut.CollectTokens(new TokenCollection(blackCount: blackCount, blueCount: blueCount));
+        _sut.CollectTokens(new TokenCollection(onyxCount: blackCount, sapphireCount: blueCount));
 
         uint blackCost = 2;
         uint blueCost = 2;
 
-        var cost = new TokenCollection(blackCount: blackCost, blueCount: blueCost);
+        var cost = new TokenCollection(onyxCount: blackCost, sapphireCount: blueCost);
 
         Assert.IsTrue(_sut.CanPay(cost));
     }
@@ -90,11 +90,11 @@ public class PlayerTests
         uint blueCount = 2;
         uint yellowCount = 3;
 
-        _sut.CollectTokens(new TokenCollection(blackCount: blackCount, blueCount: blueCount, yellowCount: yellowCount));
+        _sut.CollectTokens(new TokenCollection(onyxCount: blackCount, sapphireCount: blueCount, goldCount: yellowCount));
 
         uint blackCost = 3;
         uint blueCost = 3;
-        var cost = new TokenCollection(blackCount: blackCost, blueCount: blueCost);
+        var cost = new TokenCollection(onyxCount: blackCost, sapphireCount: blueCost);
 
         Assert.IsTrue(_sut.CanPay(cost));
     }

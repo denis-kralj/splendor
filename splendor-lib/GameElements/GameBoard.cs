@@ -109,4 +109,17 @@ public class GameBoard : IBoard
     {
         _publicNoblesInternal = _noblesDeck.Draw(playerCount + 1);
     }
+
+    public bool TryTakePublicDevelopment(Development developmentToTake, out ExecutionResult executionResult)
+    {
+        if(!PublicDevelopments.Contains(developmentToTake))
+        {
+            executionResult = ExecutionResult.InvalidDevelopmentToReserve;
+            return false;
+        }
+
+        TakeFromPublic(developmentToTake, out _);
+        executionResult = ExecutionResult.Success;
+        return true;
+    }
 }

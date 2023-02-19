@@ -4,7 +4,7 @@ public class ReserveDevelopmentAction : IGameAction
 {
     private Location _location;
     private Development _developmentForReserving;
-    private TokenCollection goldPayDay = new TokenCollection(yellowCount: 1);
+    private TokenCollection goldPayDay = new TokenCollection(goldCount: 1);
 
     public ReserveDevelopmentAction(Location location, Development toReserve = null)
     {
