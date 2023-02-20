@@ -10,6 +10,7 @@ public interface IBoard
 
     void AddTokensToBoard(TokenCollection tokensToReturnToBoard);
     bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken);
+    public bool TryTakeDeckDevelopment(DevelopmentDeck drawLocation, out Development development, out ExecutionResult result);
     bool TryTakePublicDevelopment(Development developmentToTake, out ExecutionResult executionResult);
     bool TryTakeTokensFormBoard(TokenCollection tokensToGetFromBoard);
 }
