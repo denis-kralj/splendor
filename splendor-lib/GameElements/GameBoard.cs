@@ -45,7 +45,7 @@ public class GameBoard : IBoard
     {
         actuallyTaken = deck.IsEmpty ? null : deck.Draw().First();
 
-        return actuallyTaken != null;
+        return (object)actuallyTaken != null;
     }
 
     private bool TakeFromPublic(Development developmentToTake, out Development actuallyTaken)
@@ -121,5 +121,23 @@ public class GameBoard : IBoard
         TakeFromPublic(developmentToTake, out _);
         executionResult = ExecutionResult.Success;
         return true;
+    }
+
+    public bool TryTakeDeckDevelopment(DevelopmentDeck drawLocation, out Development development, out ExecutionResult result)
+    {
+        IDeck<Development> drawDeck = null;
+
+        switch (drawLocation)
+        {
+            case DevelopmentDeck.Level1: default: drawDeck = _lvl1Deck; break;
+            case DevelopmentDeck.Level2:          drawDeck = _lvl2Deck; break;
+            case DevelopmentDeck.Level3:          drawDeck = _lvl3Deck; break;
+        }
+
+        var success = TakeFromDeck(drawDeck, out development);
+
+        result = success ? ExecutionResult.Success : ExecutionResult.CantDraw;
+
+        return success;
     }
 }
