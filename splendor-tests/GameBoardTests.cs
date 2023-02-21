@@ -63,11 +63,15 @@ public class GameBoardTests
         uint blackCount = 1;
         uint blueCount = 0;
         uint whiteCount = 2;
-        var tokensToReturnToBoard = new TokenCollection(whiteCount, blackCount, blueCount, greenCount, redCount, yellowCount);
 
         var expectedTokens = new TokenCollection(7 + whiteCount, 7 + blackCount, 7 + blueCount, 7 + greenCount, 7 + redCount, 5 + yellowCount);
 
-        _sut.AddTokensToBoard(tokensToReturnToBoard);
+        _sut.AddToken(Token.Gold, yellowCount);
+        _sut.AddToken(Token.Diamond, whiteCount);
+        _sut.AddToken(Token.Emerald, greenCount);
+        _sut.AddToken(Token.Onyx, blackCount);
+        _sut.AddToken(Token.Ruby, redCount);
+        _sut.AddToken(Token.Sapphire, blueCount);
 
         var actualTokens = _sut.BoardTokens;
 

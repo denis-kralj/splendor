@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace splendor_lib;
 
-public interface IPlayer
+public interface IPlayer : ITokenBank
 {
     string PlayerName { get; }
     uint Prestige { get; }
@@ -11,10 +11,8 @@ public interface IPlayer
 
     void BuyDevelopment(Development development);
     bool CanPay(IReadOnlyTokenCollection price);
-    void CollectTokens(TokenCollection tokens);
     uint Discount(Token type);
     void TakeNoble(Noble noble);
-    uint TokenCount(Token type);
     bool TryPay(IReadOnlyTokenCollection price);
     bool TryRemoveReserved(Development developmentToBuy);
     bool TryReserve(Development development);

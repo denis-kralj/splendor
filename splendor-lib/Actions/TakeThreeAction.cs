@@ -5,9 +5,10 @@ namespace splendor_lib;
 
 public class TakeThreeAction : IGameAction
 {
-    private List<Token> _tokenList;
+    private readonly List<Token> _tokenList;
 
     private bool IsInvalidTokenCombination => _tokenList.Count > 3 || _tokenList.Distinct().Count() != _tokenList.Count;
+    private bool BoardHasInsufficientTokens(IBoard board) => _tokenList.Any(t => board.GetTokenCount(t) == 0);
 
     public TakeThreeAction(params Token[] tokens)
     {
@@ -22,25 +23,19 @@ public class TakeThreeAction : IGameAction
             return false;
         }
 
-        var tokenCollection = GetTokenCollection();
-
-        var success = board.TryTakeTokensFormBoard(tokenCollection);
-        result = success ? ExecutionResult.Success : ExecutionResult.InsufficientTokens;
-
-        if (success) player.CollectTokens(tokenCollection);
-
-        return success;
-    }
-
-    private TokenCollection GetTokenCollection()
-    {
-        var result = new TokenCollection();
-
-        foreach(var token in _tokenList)
+        if (BoardHasInsufficientTokens(board))
         {
-            result.AddTokens(token, 1);
+            result = ExecutionResult.InsufficientTokens;
+            return false;
         }
 
-        return result;
+        foreach (var token in _tokenList)
+        {
+            board.RemoveToken(token);
+            player.AddToken(token);
+        }
+
+        result = ExecutionResult.Success;
+        return true;
     }
 }

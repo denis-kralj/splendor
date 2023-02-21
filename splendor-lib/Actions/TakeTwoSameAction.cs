@@ -4,6 +4,7 @@ public class TakeTwoSameAction : IGameAction
 {
     private readonly Token _tokenType;
     private const uint _minBoardTokenCount = 4;
+    private bool BoardHasInsufficientTokens(IBoard board) => board.GetTokenCount(_tokenType) < _minBoardTokenCount;
 
     public TakeTwoSameAction(Token type)
     {
@@ -24,27 +25,10 @@ public class TakeTwoSameAction : IGameAction
             return false;
         }
 
-        var tokenCollection = GenerateCollection();
+        board.RemoveToken(Token.Gold, 2);
+        player.AddToken(Token.Gold, 2);
 
         result = ExecutionResult.Success;
-        player.CollectTokens(tokenCollection);
-        return board.TryTakeTokensFormBoard(tokenCollection);
-    }
-
-    private TokenCollection GenerateCollection()
-    {
-        switch(_tokenType)
-        {
-            case Token.Onyx: return new TokenCollection(onyxCount: 2);
-            case Token.Diamond: return new TokenCollection(diamondCount: 2);
-            case Token.Emerald: return new TokenCollection(emeraldCount: 2);
-            case Token.Sapphire: return new TokenCollection(sapphireCount: 2);
-            case Token.Ruby: default: return new TokenCollection(rubyCount: 2);
-        }
-    }
-
-    private bool BoardHasInsufficientTokens(IBoard board)
-    {
-        return board.BoardTokens.GetCount(_tokenType) < _minBoardTokenCount;
+        return true;
     }
 }

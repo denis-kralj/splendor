@@ -27,9 +27,6 @@ public class GameBoard : IBoard
     public IReadOnlyTokenCollection BoardTokens => _boardTokensInternal;
     public List<Development> PublicDevelopments => _boardDevelopmentsInternal;
 
-    public void AddTokensToBoard(TokenCollection tokensToReturnToBoard) => _boardTokensInternal.AddTokens(tokensToReturnToBoard);
-    public bool TryTakeTokensFormBoard(TokenCollection tokensToGetFromBoard) => _boardTokensInternal.TryTake(tokensToGetFromBoard);
-
     public bool TryRemoveDevelopment(Location location, Development developmentToTake, out Development actuallyTaken)
     {
         switch (location)
@@ -139,5 +136,20 @@ public class GameBoard : IBoard
         result = success ? ExecutionResult.Success : ExecutionResult.CantDraw;
 
         return success;
+    }
+
+    public void AddToken(Token type, uint count = 1)
+    {
+        _boardTokensInternal.AddTokens(type, count);
+    }
+
+    public void RemoveToken(Token type, uint count = 1)
+    {
+        _boardTokensInternal.TryTake(type, count);
+    }
+
+    public uint GetTokenCount(Token type)
+    {
+        return _boardTokensInternal.GetCount(type);
     }
 }

@@ -57,7 +57,7 @@ public class TakeThreeActionTests
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
         var sut = new TakeThreeAction(Token.Diamond, Token.Onyx, Token.Sapphire);
-        board.TryTakeTokensFormBoard(new TokenCollection(4, 4, 4, 4, 4, 5));
+        board.RemoveAllTokens();
 
         Assert.IsFalse(sut.TryExecuteAction(player, board, out var result));
         Assert.AreEqual(ExecutionResult.InsufficientTokens, result);
