@@ -21,10 +21,9 @@ public class TakeThreeActionTests
     [Test]
     public void CanExecuteInValidConditions()
     {
-        var tokensToTake = new TokenCollection(1, 1, 1, 0, 0, 0);
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
-        var sut = new TakeThreeAction(tokensToTake);
+        var sut = new TakeThreeAction(Token.Diamond, Token.Onyx, Token.Sapphire);
 
         Assert.IsTrue(sut.TryExecuteAction(player, board, out var result));
         Assert.AreEqual(ExecutionResult.Success, result);
@@ -33,10 +32,9 @@ public class TakeThreeActionTests
     [Test]
     public void CanExecuteWithLessThenThreeTokens()
     {
-        var tokensToTake = new TokenCollection(1, 1, 0, 0, 0, 0);
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
-        var sut = new TakeThreeAction(tokensToTake);
+        var sut = new TakeThreeAction(Token.Diamond, Token.Onyx);
 
         Assert.IsTrue(sut.TryExecuteAction(player, board, out var result));
         Assert.AreEqual(ExecutionResult.Success, result);
@@ -45,10 +43,9 @@ public class TakeThreeActionTests
     [Test]
     public void DoesntExecuteWithInvalidTokenCount()
     {
-        var tokensToTake = new TokenCollection(1, 1, 2, 0, 0, 0);
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
-        var sut = new TakeThreeAction(tokensToTake);
+        var sut = new TakeThreeAction(Token.Diamond, Token.Onyx, Token.Sapphire, Token.Sapphire);
 
         Assert.IsFalse(sut.TryExecuteAction(player, board, out var result));
         Assert.AreEqual(ExecutionResult.InvalidTokenCombination, result);
@@ -57,10 +54,9 @@ public class TakeThreeActionTests
     [Test]
     public void DoesntExecuteWithInsufficientTokensOnField()
     {
-        var tokensToTake = new TokenCollection(1, 1, 1, 0, 0, 0);
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
-        var sut = new TakeThreeAction(tokensToTake);
+        var sut = new TakeThreeAction(Token.Diamond, Token.Onyx, Token.Sapphire);
         board.TryTakeTokensFormBoard(new TokenCollection(4, 4, 4, 4, 4, 5));
 
         Assert.IsFalse(sut.TryExecuteAction(player, board, out var result));
