@@ -72,34 +72,34 @@ public class ReserveDeckDevelopmentActionTests
     public void ShouldGivePlayerOneGoldAfterSuccessfulReserve()
     {
         var reserver = new Player("Kora");
-        var goldCountBefore = reserver.TokenCount(Token.Gold);
+        var goldCountBefore = reserver.GetTokenCount(Token.Gold);
         var expectedGoldCount = ++goldCountBefore;
         var sut = new ReserveDeckDevelopmentAction(DevelopmentDeck.Level1);
 
         sut.TryExecuteAction(reserver, _board, out _);
 
-        Assert.AreEqual(expectedGoldCount, reserver.TokenCount(Token.Gold));
+        Assert.AreEqual(expectedGoldCount, reserver.GetTokenCount(Token.Gold));
     }
 
     [Test]
     public void ShouldGivePlayerNoGoldWhenNoGoldOnBoard()
     {
         var reserver = new Player("Katara");
-        var goldCountBefore = reserver.TokenCount(Token.Gold);
-        while (_board.TryTakeTokensFormBoard(new TokenCollection(goldCount: 1))) { }
+        var goldCountBefore = reserver.GetTokenCount(Token.Gold);
+        _board.RemoveAllTokensOfType(Token.Gold);
         var sut = new ReserveDeckDevelopmentAction(DevelopmentDeck.Level1);
 
         sut.TryExecuteAction(reserver, _board, out _);
 
-        Assert.AreEqual(goldCountBefore, reserver.TokenCount(Token.Gold));
+        Assert.AreEqual(goldCountBefore, reserver.GetTokenCount(Token.Gold));
     }
 
     [Test]
     public void ShouldAllowReserveWithNoGoldTokensOnBoard()
     {
         var reserver = new Player("Sokka");
-        var goldCountBefore = reserver.TokenCount(Token.Gold);
-        while (_board.TryTakeTokensFormBoard(new TokenCollection(goldCount: 1))) { }
+        var goldCountBefore = reserver.GetTokenCount(Token.Gold);
+        _board.RemoveAllTokensOfType(Token.Gold);
         var sut = new ReserveDeckDevelopmentAction(DevelopmentDeck.Level1);
 
         Assert.IsTrue(sut.TryExecuteAction(reserver, _board, out var result));

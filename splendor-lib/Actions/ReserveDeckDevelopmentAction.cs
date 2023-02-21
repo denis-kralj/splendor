@@ -20,13 +20,10 @@ public class ReserveDeckDevelopmentAction : IGameAction
 
         var success = board.TryTakeDeckDevelopment(_drawLocation, out var development, out result);
 
-        if (success)
+        if (success && board.GetTokenCount(Token.Gold) > 0)
         {
-            if (board.TryTakeTokensFormBoard(goldPayDay))
-            {
-                player.CollectTokens(goldPayDay);
-            }
-
+            board.RemoveToken(Token.Gold);
+            player.AddToken(Token.Gold);
             player.TryReserve(development);
         }
 

@@ -37,7 +37,7 @@ public class TakeTwoSameActionTests
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
         var sut = new TakeTwoSameAction(Token.Sapphire);
-        board.TryTakeTokensFormBoard(new TokenCollection(4, 4, 4, 4, 4, 5));
+        board.RemoveAllTokens();
 
         Assert.IsFalse(sut.TryExecuteAction(player, board, out var result));
         Assert.AreEqual(ExecutionResult.InsufficientTokens, result);
@@ -50,7 +50,7 @@ public class TakeTwoSameActionTests
         var player = new Player("Shaggy");
         var board = new GameBoard(PlayerCount.Two, _nobles, _developments);
         var sut = new TakeTwoSameAction(Token.Sapphire);
-        board.TryTakeTokensFormBoard(new TokenCollection(0, 0, 1, 0, 0, 0));
+        board.RemoveAllTokensOfType(Token.Sapphire);
 
         Assert.IsFalse(sut.TryExecuteAction(player, board, out var result));
         Assert.AreEqual(ExecutionResult.InsufficientTokens, result);

@@ -43,37 +43,37 @@ public class ReservePublicDevelopmentActionTests
     public void ShouldGivePlayerOneGoldAfterSuccessfulReserve()
     {
         var reserver = new Player("Kora");
-        var goldCountBefore = reserver.TokenCount(Token.Gold);
+        var goldCountBefore = reserver.GetTokenCount(Token.Gold);
         var expectedGoldCount = ++goldCountBefore;
         var toReserve = _board.PublicDevelopments.First();
         var sut = new ReservePublicDevelopmentAction(toReserve);
 
         sut.TryExecuteAction(reserver, _board, out _);
 
-        Assert.AreEqual(expectedGoldCount, reserver.TokenCount(Token.Gold));
+        Assert.AreEqual(expectedGoldCount, reserver.GetTokenCount(Token.Gold));
     }
 
     [Test]
     public void ShouldGivePlayerNoGoldWhenNoGoldOnBoard()
     {
         var reserver = new Player("Katara");
-        var goldCountBefore = reserver.TokenCount(Token.Gold);
+        var goldCountBefore = reserver.GetTokenCount(Token.Gold);
         var toReserve = _board.PublicDevelopments.First();
-        while (_board.TryTakeTokensFormBoard(new TokenCollection(goldCount: 1))) { }
+        _board.RemoveAllTokensOfType(Token.Gold);
         var sut = new ReservePublicDevelopmentAction(toReserve);
 
         sut.TryExecuteAction(reserver, _board, out _);
 
-        Assert.AreEqual(goldCountBefore, reserver.TokenCount(Token.Gold));
+        Assert.AreEqual(goldCountBefore, reserver.GetTokenCount(Token.Gold));
     }
 
     [Test]
     public void ShouldAllowReserveWithNoGoldTokensOnBoard()
     {
         var reserver = new Player("Sokka");
-        var goldCountBefore = reserver.TokenCount(Token.Gold);
+        var goldCountBefore = reserver.GetTokenCount(Token.Gold);
         var toReserve = _board.PublicDevelopments.First();
-        while (_board.TryTakeTokensFormBoard(new TokenCollection(goldCount: 1))) { }
+        _board.RemoveAllTokensOfType(Token.Gold);
         var sut = new ReservePublicDevelopmentAction(toReserve);
 
         Assert.IsTrue(sut.TryExecuteAction(reserver, _board, out var result));

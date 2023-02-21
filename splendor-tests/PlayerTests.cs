@@ -17,12 +17,12 @@ public class PlayerTests
     [Test]
     public void PlayerIsInitializedWithoutTokens()
     {
-        Assert.IsTrue(_sut.TokenCount(Token.Onyx) == 0);
-        Assert.IsTrue(_sut.TokenCount(Token.Sapphire) == 0);
-        Assert.IsTrue(_sut.TokenCount(Token.Emerald) == 0);
-        Assert.IsTrue(_sut.TokenCount(Token.Ruby) == 0);
-        Assert.IsTrue(_sut.TokenCount(Token.Diamond) == 0);
-        Assert.IsTrue(_sut.TokenCount(Token.Gold) == 0);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Onyx) == 0);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Sapphire) == 0);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Emerald) == 0);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Ruby) == 0);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Diamond) == 0);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Gold) == 0);
     }
 
     [Test]
@@ -30,10 +30,11 @@ public class PlayerTests
     {
         uint yellowCount = 2;
         uint blackCount = 1;
-        _sut.CollectTokens(new TokenCollection(goldCount: yellowCount, onyxCount: blackCount));
+        _sut.AddToken(Token.Gold, yellowCount);
+        _sut.AddToken(Token.Onyx, blackCount);
 
-        Assert.IsTrue(_sut.TokenCount(Token.Gold) == yellowCount);
-        Assert.IsTrue(_sut.TokenCount(Token.Onyx) == blackCount);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Gold) == yellowCount);
+        Assert.IsTrue(_sut.GetTokenCount(Token.Onyx) == blackCount);
     }
 
     [Test]
@@ -70,10 +71,8 @@ public class PlayerTests
     [Test]
     public void CanConfirmHeCanBuyIfHasFundsWithoutGold()
     {
-        uint blackCount = 3;
-        uint blueCount = 2;
-
-        _sut.CollectTokens(new TokenCollection(onyxCount: blackCount, sapphireCount: blueCount));
+        _sut.AddToken(Token.Onyx, 3);
+        _sut.AddToken(Token.Sapphire, 2);
 
         uint blackCost = 2;
         uint blueCost = 2;
@@ -86,11 +85,9 @@ public class PlayerTests
     [Test]
     public void CanConfirmHeCanBuyIfHasFundsWithGold()
     {
-        uint blackCount = 1;
-        uint blueCount = 2;
-        uint yellowCount = 3;
-
-        _sut.CollectTokens(new TokenCollection(onyxCount: blackCount, sapphireCount: blueCount, goldCount: yellowCount));
+        _sut.AddToken(Token.Onyx, 1);
+        _sut.AddToken(Token.Sapphire, 2);
+        _sut.AddToken(Token.Gold, 3);
 
         uint blackCost = 3;
         uint blueCost = 3;

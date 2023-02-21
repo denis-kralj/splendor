@@ -20,13 +20,10 @@ public class ReservePublicDevelopmentAction : IGameAction
 
         var success = board.TryTakePublicDevelopment(_developmentToReserve, out result);
 
-        if (success)
+        if (success && board.GetTokenCount(Token.Gold) > 0)
         {
-            if (board.TryTakeTokensFormBoard(goldPayDay))
-            {
-                player.CollectTokens(goldPayDay);
-            }
-
+            board.RemoveToken(Token.Gold);
+            player.AddToken(Token.Gold);
             player.TryReserve(_developmentToReserve);
         }
 

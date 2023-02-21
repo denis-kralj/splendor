@@ -25,8 +25,6 @@ public class Player : IPlayer
     public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
     public bool TryRemoveReserved(Development developmentToBuy) => ReservedDevelopments.Remove(developmentToBuy);
     public void BuyDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
-    public void CollectTokens(TokenCollection tokens) => _tokensInternal.AddTokens(tokens);
-    public uint TokenCount(Token type) => _tokensInternal.GetCount(type);
     public uint Discount(Token type) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == type);
 
     public bool TryReserve(Development development)
@@ -40,7 +38,7 @@ public class Player : IPlayer
 
     public bool CanPay(IReadOnlyTokenCollection price)
     {
-        uint usableGold = TokenCount(Token.Gold);
+        uint usableGold = GetTokenCount(Token.Gold);
 
         foreach (Token type in Tokens.AllTokens)
         {
@@ -49,7 +47,7 @@ public class Player : IPlayer
             if (discountedPrice < 1)
                 continue;
 
-            uint have = TokenCount(type);
+            uint have = GetTokenCount(type);
 
             if (discountedPrice > usableGold + have)
                 return false;
@@ -74,7 +72,7 @@ public class Player : IPlayer
             if (discountedPrice < 1)
                 continue;
 
-            uint goldDiff = (uint)(discountedPrice - TokenCount(type));
+            uint goldDiff = (uint)(discountedPrice - GetTokenCount(type));
 
             if (goldDiff > 0)
             {
@@ -87,5 +85,20 @@ public class Player : IPlayer
 
         _tokensInternal.TryTake(price);
         return true;
+    }
+
+    public void AddToken(Token type, uint count = 1)
+    {
+        _tokensInternal.AddTokens(type, count);
+    }
+
+    public void RemoveToken(Token type, uint count = 1)
+    {
+        _tokensInternal.TryTake(type, count);
+    }
+
+    public uint GetTokenCount(Token type)
+    {
+        return _tokensInternal.GetCount(type);
     }
 }
