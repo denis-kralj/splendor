@@ -26,6 +26,8 @@ public class ReservePublicDevelopmentAction : IGameAction
             {
                 player.CollectTokens(goldPayDay);
             }
+
+            player.TryReserve(_developmentToReserve);
         }
 
         return success;
