@@ -28,6 +28,18 @@ public class ReservePublicDevelopmentActionTests
     }
 
     [Test]
+    public void ShouldGivePlayerANewReservedDevelopment()
+    {
+        var reserver = new Player("Aang");
+        var expectedReservedCount = reserver.ReservedDevelopments.Count + 1;
+        var toReserve = _board.PublicDevelopments.First();
+        var sut = new ReservePublicDevelopmentAction(toReserve);
+
+        sut.TryExecuteAction(reserver, _board, out var result);
+        Assert.AreEqual(expectedReservedCount, reserver.ReservedDevelopments.Count);
+    }
+
+    [Test]
     public void ShouldGivePlayerOneGoldAfterSuccessfulReserve()
     {
         var reserver = new Player("Kora");
