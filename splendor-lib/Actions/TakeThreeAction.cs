@@ -1,20 +1,17 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace splendor_lib;
 
 public class TakeThreeAction : IGameAction
 {
-    private TokenCollection _tokensInternal;
-    private const uint _validTotalCount = 3;
-    private const uint _validSingleCount = 1;
+    private List<Token> _tokenList;
 
-    private bool _tokenTotalHigherThenAllowed => _tokensInternal.TotalTokens > _validTotalCount;
-    private bool _moreThenOneTokenOfSingleType => Tokens.AllTokens.Any(t => _tokensInternal.GetCount(t) > _validSingleCount);
-    private bool IsInvalidTokenCombination => _tokenTotalHigherThenAllowed || _moreThenOneTokenOfSingleType;
+    private bool IsInvalidTokenCombination => _tokenList.Count > 3 || _tokenList.Distinct().Count() != _tokenList.Count;
 
-    public TakeThreeAction(TokenCollection tokensToTake)
+    public TakeThreeAction(params Token[] tokens)
     {
-        _tokensInternal = tokensToTake;
+        _tokenList = tokens.ToList();
     }
 
     public bool TryExecuteAction(IPlayer player, IBoard board, out ExecutionResult result)
@@ -25,11 +22,25 @@ public class TakeThreeAction : IGameAction
             return false;
         }
 
-        var success = board.TryTakeTokensFormBoard(_tokensInternal);
+        var tokenCollection = GetTokenCollection();
+
+        var success = board.TryTakeTokensFormBoard(tokenCollection);
         result = success ? ExecutionResult.Success : ExecutionResult.InsufficientTokens;
 
-        if (success) player.CollectTokens(_tokensInternal);
+        if (success) player.CollectTokens(tokenCollection);
 
         return success;
+    }
+
+    private TokenCollection GetTokenCollection()
+    {
+        var result = new TokenCollection();
+
+        foreach(var token in _tokenList)
+        {
+            result.AddTokens(token, 1);
+        }
+
+        return result;
     }
 }
