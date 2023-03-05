@@ -9,7 +9,7 @@ public interface IPlayer : ITokenBank
     bool HandFull { get; }
     List<Development> ReservedDevelopments { get; }
 
-    void BuyDevelopment(Development development);
+    IReadOnlyTokenCollection BuyDevelopment(Development development);
     bool CanPay(IReadOnlyTokenCollection price);
     uint Discount(Token type);
     void TakeNoble(Noble noble);
