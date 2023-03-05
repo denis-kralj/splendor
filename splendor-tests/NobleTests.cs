@@ -40,6 +40,9 @@ public class NobleTests
     public void WillVisitPlayerThatDoesCoverRequirements()
     {
         var player = new Player("A name");
+        player.AddToken(Token.Onyx, black);
+        player.AddToken(Token.Sapphire, blue);
+        player.AddToken(Token.Diamond, white);
 
         for (int i = 0; i < black; i++)
             player.BuyDevelopment(new Development(0, 0, Token.Onyx, new TokenCollection()));

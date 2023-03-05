@@ -24,7 +24,31 @@ public class Player : IPlayer
 
     public void TakeNoble(Noble noble) => _noblesInternal.Add(noble);
     public bool TryRemoveReserved(Development developmentToBuy) => ReservedDevelopments.Remove(developmentToBuy);
-    public void BuyDevelopment(Development development) => _purchasedDevelopmentsInternal.Add(development);
+    public IReadOnlyTokenCollection BuyDevelopment(Development development)
+    {
+        if (!CanPay(development.Cost)) throw new System.Exception("we should have not come here!");
+
+        TokenCollection payed = new TokenCollection();
+
+        foreach (Token type in Tokens.AllTokens)
+        {
+            if(development.Cost.GetCount(type) <= Discount(type))
+                continue;
+
+            var discountedPrice = development.Cost.GetCount(type) - Discount(type);
+
+            uint goldDiff = (uint)(discountedPrice - GetTokenCount(type));
+
+            RemoveToken(Token.Gold, goldDiff);
+            payed.AddTokens(Token.Gold, goldDiff);
+            RemoveToken(type, discountedPrice - goldDiff);
+            payed.AddTokens(type, discountedPrice - goldDiff);
+        }
+
+        _purchasedDevelopmentsInternal.Add(development);
+
+        return payed;
+    } 
     public uint Discount(Token type) => (uint)_purchasedDevelopmentsInternal.Count(d => d.Discounts == type);
 
     public bool TryReserve(Development development)
@@ -42,10 +66,10 @@ public class Player : IPlayer
 
         foreach (Token type in Tokens.AllTokens)
         {
-            uint discountedPrice = price.GetCount(type) - Discount(type);
-
-            if (discountedPrice < 1)
+            if(price.GetCount(type) <= Discount(type))
                 continue;
+
+            uint discountedPrice = price.GetCount(type) - Discount(type);
 
             uint have = GetTokenCount(type);
 
@@ -94,6 +118,11 @@ public class Player : IPlayer
 
     public void RemoveToken(Token type, uint count = 1)
     {
+        if (count > GetTokenCount(type))
+        {
+            throw new System.Exception("should type this exception");
+        }
+
         _tokensInternal.TryTake(type, count);
     }
 
